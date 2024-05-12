@@ -10,6 +10,8 @@ flex-direction: row;
     width: 150px;
 }
 #seats{
+    display: flex;
+    flex-direction: column;
     border-left-color: #C94C4B;
     border-style: solid;
     border-right-color: #C94C4B;
@@ -21,6 +23,9 @@ flex-direction: row;
     flex-basis: 500px; 
     height: 1000px;
     margin-right: 50px;
+}
+#letters{
+    display: flex;
 }
 #first-flex{
     flex-grow: 0; 
