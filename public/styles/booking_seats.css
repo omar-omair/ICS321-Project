@@ -1,49 +1,99 @@
-#main-flex{
-display: flex;
-flex-direction: row;
+#main-flex {
+    display: flex;
+    flex-direction: row;
 }
-#previous{
+
+#previous {
     width: 150px;
     margin-left: 100px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 10px;
 }
-#next{
+
+#next {
     width: 150px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 10px;
 }
-#seats{
+
+#seats {
     display: flex;
     flex-direction: column;
     border-left-color: #C94C4B;
     border-style: solid;
     border-right-color: #C94C4B;
-    border-top-style:hidden;
-    border-bottom-style:hidden;
-      /* Adjust these values as needed */
-    flex-grow: 0; /* Prevents the item from growing */
-    flex-shrink: 0; /* Prevents the item from shrinking */
-    flex-basis: 500px; /* Allows the item to determine its own size */
+    border-top-style: hidden;
+    border-bottom-style: hidden;
+    /* Adjust these values as needed */
+    flex-grow: 0;
+    /* Prevents the item from growing */
+    flex-shrink: 0;
+    /* Prevents the item from shrinking */
+    flex-basis: 500px;
+    /* Allows the item to determine its own size */
     height: 1000px;
-    margin-right: 50px;
+    margin-right: 20px;
+    margin-top: 10px;
 }
-#letters{
+
+#letters {
     display: flex;
+    color: white;
 }
-#first-flex{
-    flex-grow: 0; /* Prevents the item from growing */
-    flex-shrink: 0; /* Prevents the item from shrinking */
-    flex-basis: 300px; /* Allows the item to determine its own size */
+
+#letters * {
+    margin-left: 51px;
+    font-size: 30px;
 }
-#next{
+
+#first-flex {
+    flex-grow: 0;
+    /* Prevents the item from growing */
+    flex-shrink: 0;
+    /* Prevents the item from shrinking */
+    flex-basis: 300px;
+    /* Allows the item to determine its own size */
+}
+
+#next {
     width: 150px;
     margin-left: 50px;
 }
-#third-flex{
-    flex-grow: 0; /* Prevents the item from growing */
-    flex-shrink: 0; /* Prevents the item from shrinking */
-    flex-basis: 250px; /* Allows the item to determine its own size */
+
+#third-flex {
+    flex-grow: 0;
+    /* Prevents the item from growing */
+    flex-shrink: 0;
+    /* Prevents the item from shrinking */
+    flex-basis: 250px;
+    /* Allows the item to determine its own size */
 }
-#fourth-flex{
-    background-color: gray;
-    flex-grow: 0; /* Prevents the item from growing */
-    flex-shrink: 0; /* Prevents the item from shrinking */
-    flex-basis: 300px; /* Allows the item to determine its own size */
+
+#fourth-flex {
+    flex-grow: 0;
+    /* Prevents the item from growing */
+    flex-shrink: 0;
+    /* Prevents the item from shrinking */
+    flex-basis: 300px;
+    /* Allows the item to determine its own size */
+    background-color: #303030;
+    color: white;
+    padding: 20px;
+}
+
+.seat_row {
+    display: flex;
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+.seat_row * {
+    margin-left: 30px;
+    width: 40px;
+}
+
+.white_seat_img:hover {
+    content: url("../images/airplane.png");
 }
