@@ -1,9 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+html {
+    overflow-x: hidden;
+    font-family: "Inter";
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+body {
+    background-color: #121212;
+}
 #paymentForm{
+display: flex;
    /* Rectangle 2 */
+flex-direction: column;
 width: 612px;
 height: 568px;
-
 background: #C94C4B;
 border-radius: 45px;
-
+padding-top: 30px;
+align-items: center;
+}
+.labels{
+    align-self: flex-start;
 }
