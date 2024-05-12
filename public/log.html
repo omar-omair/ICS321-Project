@@ -3,19 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="base.css">
     <title>Login</title>
 </head>
 <body>
+    <div id="corner_circle"></div>
+    <div id="corner_circle2"></div>
+    <div id="corner_circle3"></div>
+    
     <div class="container">
-        <img src="airplane.png">
-        <form  method="POST">
+        <img src="airplane.png" id="plane_img">
+        <form  method="POST" id="login_form">
             <input type="text" id="username" placeholder="USERNAME" name="username" required>
-        
             <input type="password" id="password" placeholder="PASSWORD" name="password" required>
-        
-            <button type="submit">LOGIN</button>
+            <button type="submit" id="login_button">LOGIN</button>
         </form>
-        <a href="/">Forget password?</a>
+        <a href="/" id="forgot">Forget password?</a>
     </div>
 </body>
 </html>
