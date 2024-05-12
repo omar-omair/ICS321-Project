@@ -11,7 +11,7 @@
     <div id="corner_circle2"></div>
     <div id="corner_circle3"></div>
     <div class="container">
-        <section class="booking" style="display: none;">
+        <section class="booking">
         <div id="booking_form">
             <h2 style="color: white;">Booking</h2>
             <form id="form_inputs">
@@ -37,16 +37,26 @@
                     </select>
                 <input type="date" id="departure" name="departure">
             </div>
-                
                 <button type="submit">Search</button>
             </form>
         </div>
     </section>
         <section id="table_section">
             <table id="reserve_table">
-
+                <tr>
+                    <th>Source City</th>
+                    <th>Destination City</th>
+                    <th>Time</th>
+                    <th>Starting Price</th>
+                </tr>
+                <tr>
+                    <td>Riyadh (KSA)</td>
+                    <td>Lahore (PK)</td>
+                    <td>13:00-17:20</td>
+                    <td>100$</td>
+                    <td><button class="book_button">Book</button></td>
+                </tr>
             </table>
-
         </section>
     </div>
 </body>

@@ -122,10 +122,56 @@ button {
 }
 
 #reserve_table {
-    width: 800px;
+    width: 1000px;
     height: 600px;
+}
+
+#table_section {
+    width: 1000px;
+    max-height: 600px;
+    overflow-y: auto;
+    padding-bottom: 10px;
     background-color: #121212;
     border: 20px solid #202020;
-    margin-top: 50px;
-    font-family: "Orbitron";
+    margin-left: 100px;
+    display: none;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    vertical-align: top;
+}
+
+th,
+td {
+    padding: 8px;
+    text-align: center;
+    color: white;
+    vertical-align: top;
+    text-align: center;
+    height: 50px;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+td {
+    color: #C94C4B;
+    vertical-align: top;
+}
+
+::-webkit-scrollbar {
+    background-color: #121212;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #C94C4B;
+}
+
+tr {
+    height: 50px;
+}
+
+.book_button {
+    width: 100px;
 }
