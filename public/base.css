@@ -1,0 +1,90 @@
+html {
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+
+}
+
+body {
+    background-color: 121212;
+}
+
+#right_swoosh {
+    position: absolute;
+    width: 864px;
+    height: 721.5px;
+    left: 415.5px;
+    top: -1px;
+    background: #202020;
+    border: 1px solid #C94C4B;
+
+}
+
+#corner_circle {
+    box-sizing: border-box;
+    position: absolute;
+    width: 438px;
+    height: 438px;
+    left: -219px;
+    top: 501px;
+    background: #202020;
+    border: 1px solid #C94C4B;
+}
+
+
+
+#corner_circle2 {
+    box-sizing: border-box;
+    position: absolute;
+    width: 572px;
+    height: 572px;
+    left: -286px;
+    top: 434px;
+    background: #252525;
+    border: 1px solid #C94C4B;
+}
+
+#corner_circle3 {
+    box-sizing: border-box;
+    position: absolute;
+    width: 724px;
+    height: 724px;
+    left: -342.5px;
+    top: 369.5px;
+    background: #303030;
+    border: 1px solid #C94C4B;
+
+}
+
+input[type="password"],
+input[type="text"] {
+    width: 300px;
+    height: 45px;
+    color: #C94C4B;
+    padding-left: 10px;
+    font-family: "Inter";
+}
+
+input[type="password"]::placeholder,
+input[type="text"]::placeholder {
+    color: #C94C4B;
+    font-family: "Inter";
+    font-size: 10px;
+    text-transform: uppercase;
+}
+
+a {
+    text-decoration: none;
+    color: #C94C4B;
+}
+
+button {
+    background-color: #C94C4B;
+    width: 300px;
+    height: 45;
+    color: white;
+}
