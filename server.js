@@ -12,30 +12,26 @@ app.use(express.static("public"));
 app.use(bodyParser.json());
 
 app.get('/', async (req, res) => {
-    try {
-        const response = await new Promise((resolve, reject) => {
-            db.query("SELECT * FROM flights", (err, result) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(result.rows);
-                }
-            });
-        });
-
-        res.json(response);
-    } catch (error) {
-        console.error('Error executing query:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
+    res.redirect("/booking");
 });
 
 app.get("/login", function (req, res) {
     res.sendFile(path.join(__dirname, 'public', 'log.html'));
 })
 
+app.get("/register", function (req, res) {
+    res.sendFile(path.join(__dirname, 'public', 'register.html'));
+})
+
+
 app.get("/booking", function (req, res) {
-    res.sendFile(path.join(__dirname, 'public', 'booking.html'));
+    //var storedData = localStorage.getItem('user');
+    if (true) {
+        res.sendFile(path.join(__dirname, 'public', 'booking.html'));
+    }
+    else {
+        res.redirect("/login")
+    }
 })
 
 app.post("/login/accounts", async function (req, res) {
@@ -53,7 +49,7 @@ app.post("/login/accounts", async function (req, res) {
 
         const user = response.find(element => email === element.email && password === element.password);
         if (user) {
-            res.status(200).send("OK"); // Send user data back if found
+            res.status(200).send(email); // Send user data back if found
         } else {
             res.status(404).send('Not Found'); // Send 404 if user not found
         }
@@ -63,6 +59,26 @@ app.post("/login/accounts", async function (req, res) {
     }
 })
 
+
+app.post("/register/accounts", async function (req, res) {
+    try {
+        let pid = 99;
+        let user_type = "user";
+        const { name, email, password, phone, address } = req.body;
+        db.query(`INSERT INTO passenger VALUES(${pid}, '${name}', '${phone}', '${email}', '${address}', '${user_type}', '${password}')`, (err, result) => {
+            if (err) {
+                console.error('Error executing query:', err);
+            }
+        });
+
+        res.status(200).send(email);
+
+
+    } catch (error) {
+        console.error('Error executing query:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+})
 
 
 app.listen(PORT, () => {

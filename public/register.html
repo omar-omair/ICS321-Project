@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles/base.css" id="style">
-    <script src="frontendjs/toggle.js"></script>
+    <script src="frontendjs/register.js" defer></script>
     <title>Register</title>
 </head>
 <body>
@@ -14,7 +14,7 @@
     <div class="container">
         <img src="images/airplane.png" id="plane_img">
         <form method="POST" id="register_form">
-            <input type="text" id="username" name="username" placeholder="USERNAME" required>
+            <input type="text" id="username" name="username" placeholder="NAME" required>
             <input type="text" id="email" name="email" placeholder="EMAIL" required>
             <input type="text" id="phone" name="phone"  placeholder="PHONE" required>
             <input type="text" id="address" name="address" placeholder="ADDRESS" required>
@@ -22,7 +22,7 @@
 
             <button type="submit" id="register_button">REGISTER</button>
         </form>
-        <a href="log.html" id="haveAccount">Already have account?</a>
+        <a href="/login" id="haveAccount">Already have account?</a>
     </div>
 </body>
 </html>
