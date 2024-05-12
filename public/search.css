@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
+
 
 html {
     overflow-x: hidden;
@@ -104,7 +106,7 @@ button {
     background-color: #C94C4B;
     width: 315px;
     height: 45px;
-    color: black;
+    color: white;
     font-weight: bold;
     font-size: 20px;
     border: solid #121212;
@@ -117,4 +119,13 @@ button {
 #date_label {
     color: white;
     font-weight: bold;
+}
+
+#reserve_table {
+    width: 800px;
+    height: 600px;
+    background-color: #121212;
+    border: 20px solid #202020;
+    margin-top: 50px;
+    font-family: "Orbitron";
 }
