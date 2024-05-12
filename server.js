@@ -6,17 +6,26 @@ const PORT = process.env.PORT || 3000;
 const db = require('./db.js');
 const path = require('path');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 
 app.use(express.static("public"));
 
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 app.get('/', async (req, res) => {
     res.redirect("/booking");
 });
 
 app.get("/login", function (req, res) {
-    res.sendFile(path.join(__dirname, 'public', 'log.html'));
+    var storedData = req.cookies.userId
+    if (storedData) {
+        res.redirect("/booking")
+    }
+    else {
+        res.sendFile(path.join(__dirname, 'public', 'log.html'));
+    }
+
 })
 
 app.get("/register", function (req, res) {
@@ -25,8 +34,8 @@ app.get("/register", function (req, res) {
 
 
 app.get("/booking", function (req, res) {
-    //var storedData = localStorage.getItem('user');
-    if (true) {
+    var storedData = req.cookies.userId
+    if (storedData) {
         res.sendFile(path.join(__dirname, 'public', 'booking.html'));
     }
     else {
@@ -49,6 +58,7 @@ app.post("/login/accounts", async function (req, res) {
 
         const user = response.find(element => email === element.email && password === element.password);
         if (user) {
+            res.cookie('userId', email);
             res.status(200).send(email); // Send user data back if found
         } else {
             res.status(404).send('Not Found'); // Send 404 if user not found
@@ -71,6 +81,7 @@ app.post("/register/accounts", async function (req, res) {
             }
         });
 
+        res.cookie('userId', email);
         res.status(200).send(email);
 
 
