@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+html {
+    overflow-x: hidden;
+    font-family: "Inter";
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+body {
+    background-color: #121212;
+}
+
+/* search */
+
+#booking_form {
+    margin-top: 200px;
+    background-color: #404040;
+    padding: 30px;
+    border-radius: 5px;
+}
+
+#blackdiv {
+    display: grid;
+    background-color: #121212;
+    padding-right: 30px;
+    padding-bottom: 30px;
+    margin-bottom: 20px;
+    grid-template-columns: auto auto auto;
+    border: 2px solid #C94C4B;
+    border-radius: 2px;
+}
+
+#blackdiv * {
+    margin-left: 30px;
+}
+
+#blackdiv select,
+input[type="date"] {
+    width: 200px;
+    background-color: #121212;
+    border: none;
+    color: #C94C4B;
+}
+
+#form_inputs {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+button {
+    background-color: #C94C4B;
+    width: 315px;
+    height: 45px;
+    color: black;
+    font-weight: bold;
+    font-size: 20px;
+    border: solid #121212;
+    border-radius: 5px;
+}
+
+
+#origin_label,
+#dest_label,
+#date_label {
+    color: white;
+    font-weight: bold;
+}
