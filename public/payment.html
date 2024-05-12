@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>payment</title>
+</head>
+<body>
+    <div class="container">
+        <form>
+            <label for ="creditCardNum">Credit Card Number</label>
+            <input type="text" id="creditCardNum" name="creditCardNum"required>
+            <label for ="cardHolderName">Card Holder Name</label>
+            <input type="text" id="cardHolderName" name="cardHolderName"required>
+            <label for ="endDate">End Date</label>
+            <input type="date" id="endDate" name="endDate" min="" required>
+            <label for ="cvv">CVV</label>
+            <input type="text" id="cvv" name="cvv" required>
+            <button type="submit">Pay</button>
+        </form>
+    </div>
+    
+<script>
+    // Get today's date in the format YYYY-MM-DD
+    var today = new Date().toISOString().split('T')[0];
+    
+    // Set the minimum date for the input element
+    document.getElementById("endDate").min = today;
+</script>
+</body>
+</html>
