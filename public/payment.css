@@ -28,7 +28,27 @@ background: #C94C4B;
 border-radius: 45px;
 padding-top: 30px;
 align-items: center;
+row-gap: 40px;
 }
-.labels{
-    align-self: flex-start;
+#endDate{
+    width: 500px;
+    height: 45px;
+    background-color: #121212;
+    color: #C94C4B;
+    border-radius: 20px;
+    border-style: hidden;
+    padding-left: 10px;
+}
+input[type=text]{
+    width: 500px;
+    border-radius: 20px;
+    border-style: hidden;
+    padding-left: 10px;
+}
+button[type=submit]{
+    width: 200px;
+    background-color: #121212;
+    border-radius: 20px;
+    border-style: hidden;
+    font-size: large;
 }
