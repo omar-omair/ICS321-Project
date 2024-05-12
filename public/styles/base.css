@@ -28,8 +28,9 @@ body {
     background-color: #404040;
     padding: 30px;
     border-radius: 5px;
-    
+
 }
+
 #corner_circle {
     box-sizing: border-box;
     position: absolute;
@@ -149,7 +150,8 @@ button {
     width: 300px;
     margin-top: 50px;
 }
-#plane_img_thanks{
+
+#plane_img_thanks {
     height: 200px;
     width: 300px;
     margin-top: 13%;
