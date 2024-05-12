@@ -19,6 +19,48 @@ body {
     background-color: #121212;
 }
 
+
+#corner_circle {
+    box-sizing: border-box;
+    position: absolute;
+    width: 438px;
+    height: 438px;
+    left: -219px;
+    top: 501px;
+    border-radius: 100%;
+    background: #202020;
+    z-index: 3;
+    border: 1px solid #C94C4B;
+}
+
+
+
+#corner_circle2 {
+    box-sizing: border-box;
+    position: absolute;
+    width: 572px;
+    height: 572px;
+    left: -286px;
+    border-radius: 100%;
+    top: 434px;
+    background: #252525;
+    z-index: 2;
+    border: 1px solid #C94C4B;
+}
+
+#corner_circle3 {
+    box-sizing: border-box;
+    position: absolute;
+    width: 724px;
+    height: 724px;
+    left: -342.5px;
+    border-radius: 100%;
+    top: 369.5px;
+    background: #303030;
+    border: 1px solid #C94C4B;
+
+}
+
 /* search */
 
 #booking_form {

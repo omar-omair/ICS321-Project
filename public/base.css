@@ -19,29 +19,6 @@ body {
     background-color: #121212;
 }
 
-/* login starts under here */
-
-#login_form {
-    display: flex;
-    flex-direction: column;
-    margin-top: 30px;
-}
-
-#login_form * {
-    margin-top: 30px
-}
-/* register starts under here */
-
-#register_form {
-    display: flex;
-    flex-direction: column;
-    margin-top: 30px;
-}
-
-#register_form * {
-    margin-top: 30px
-}
-
 #corner_circle {
     box-sizing: border-box;
     position: absolute;
@@ -83,6 +60,32 @@ body {
 
 }
 
+/* login starts under here */
+
+#login_form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+}
+
+#login_form * {
+    margin-top: 30px
+}
+
+/* register starts under here */
+
+#register_form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+}
+
+#register_form * {
+    margin-top: 30px
+}
+
+
+
 input[type="password"],
 input[type="text"] {
     width: 300px;
@@ -119,14 +122,17 @@ button {
     border: none;
     border-radius: 3px;
 }
+
 #register_button {
     border: none;
     border-radius: 3px;
 }
-#new_pass_button{
+
+#new_pass_button {
     border: none;
     border-radius: 3px;
 }
+
 #plane_img {
     height: 200px;
     width: 300px;
@@ -137,11 +143,13 @@ button {
     margin-left: 180px;
     margin-top: 10px;
 }
+
 #newUser {
     margin-right: 230px;
     margin-top: -20px;
 }
-#haveAccount{
+
+#haveAccount {
     margin-left: 140px;
     margin-top: 10px;
 }
