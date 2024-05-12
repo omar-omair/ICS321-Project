@@ -1,0 +1,41 @@
+#main-flex{
+display: flex;
+flex-direction: row;
+}
+#previous{
+    width: 150px;
+    margin-left: 100px;
+}
+#seats{
+    border-left-color: #C94C4B;
+    border-style: solid;
+    border-right-color: #C94C4B;
+    border-top-style:hidden;
+    border-bottom-style:hidden;
+      /* Adjust these values as needed */
+    flex-grow: 0; /* Prevents the item from growing */
+    flex-shrink: 0; /* Prevents the item from shrinking */
+    flex-basis: 500px; /* Allows the item to determine its own size */
+    height: 1000px;
+    margin-right: 50px;
+}
+#first-flex{
+    flex-grow: 0; /* Prevents the item from growing */
+    flex-shrink: 0; /* Prevents the item from shrinking */
+    flex-basis: 300px; /* Allows the item to determine its own size */
+}
+#next{
+    width: 150px;
+    margin-left: 50px;
+}
+#third-flex{
+    flex-grow: 0; /* Prevents the item from growing */
+    flex-shrink: 0; /* Prevents the item from shrinking */
+    flex-basis: 250px; /* Allows the item to determine its own size */
+}
+#fourth-flex{
+    background-color: gray;
+    flex-grow: 0; /* Prevents the item from growing */
+    flex-shrink: 0; /* Prevents the item from shrinking */
+    flex-basis: 300px; /* Allows the item to determine its own size */
+}
