@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles/base.css">
-    <script src=""></script>
+    <script src="./frontendjs/login.js" defer></script>
     <title>Login</title>
 </head>
 <body>
@@ -14,8 +14,8 @@
     
     <div class="container">
         <img src="images/airplane.png" id="plane_img">
-        <form  method="POST" id="login_form">
-            <input type="text" id="username" placeholder="USERNAME" name="username" required>
+        <form  method="GET" id="login_form" action="/login/:id">
+            <input type="text" id="email" placeholder="Email" name="email" required>
             <input type="password" id="password" placeholder="PASSWORD" name="password" required>
             <button type="submit" id="login_button">LOGIN</button>
         </form>
@@ -24,3 +24,4 @@
     </div>
 </body>
 </html>
+
