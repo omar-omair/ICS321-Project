@@ -7,17 +7,21 @@
     <title>Register</title>
 </head>
 <body>
+    <div id="corner_circle"></div>
+    <div id="corner_circle2"></div>
+    <div id="corner_circle3"></div>
     <div class="container">
-        <img src="airplane.png">
-        <form method="POST">
-            <input type="text" id="username" name="username" placeholder="USERNAME" required><br><br>
-            <input type="text" id="email" name="email" placeholder="EMAIL" required><br><br>
-            <input type="text" id="phone" name="phone"  placeholder="PHONE" required><br><br>
-            <input type="text" id="address" name="address" placeholder="ADDRESS" required><br><br>
-            <input type="password" id="password" name="password" placeholder="PASSWORD" required><br><br>
+        <img src="airplane.png" id="plane_img">
+        <form method="POST" id="register_form">
+            <input type="text" id="username" name="username" placeholder="USERNAME" required>
+            <input type="text" id="email" name="email" placeholder="EMAIL" required>
+            <input type="text" id="phone" name="phone"  placeholder="PHONE" required>
+            <input type="text" id="address" name="address" placeholder="ADDRESS" required>
+            <input type="password" id="password" name="password" placeholder="PASSWORD" required>
 
-            <button type="submit">REGISTER</button>
+            <button type="submit" id="register_button">REGISTER</button>
         </form>
+        <a href="log.html" id="haveAccount">Already have account?</a>
     </div>
 </body>
 </html>

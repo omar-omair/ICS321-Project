@@ -30,8 +30,17 @@ body {
 #login_form * {
     margin-top: 30px
 }
+/* register starts under here */
 
+#register_form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+}
 
+#register_form * {
+    margin-top: 30px
+}
 
 #corner_circle {
     box-sizing: border-box;
@@ -110,7 +119,14 @@ button {
     border: none;
     border-radius: 3px;
 }
-
+#register_button {
+    border: none;
+    border-radius: 3px;
+}
+#new_pass_button{
+    border: none;
+    border-radius: 3px;
+}
 #plane_img {
     height: 200px;
     width: 300px;
@@ -119,5 +135,13 @@ button {
 
 #forgot {
     margin-left: 180px;
+    margin-top: 10px;
+}
+#newUser {
+    margin-right: 230px;
+    margin-top: -20px;
+}
+#haveAccount{
+    margin-left: 140px;
     margin-top: 10px;
 }
