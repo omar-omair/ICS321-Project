@@ -169,6 +169,10 @@ app.post("/forgetpassword", async function (req, res) {
 app.get("/payment", function (req, res) {
     res.sendFile(path.join(__dirname, 'public', 'payment.html'));
 }) 
+
+app.get("/thanks", function (req, res) {
+    res.sendFile(path.join(__dirname, 'public', 'thanks.html'));
+}) 
 app.post("/payment", async function (req, res) {
     try {
         const { credit_number, holder_name, end_date, cvv } = req.body;
@@ -188,7 +192,7 @@ app.post("/payment", async function (req, res) {
                     }
                 });
             });
-            res.status(200).redirect('/login');
+            res.status(200).redirect('/thanks');
         } else {
             res.status(404);
         }
@@ -340,7 +344,6 @@ app.get("/activeFlights", async function (req, res) {
     });
     res.json(response);
 })
-<<<<<<< HEAD
 app.get("/cancelledTickets", async function (req, res) {
     const response = await new Promise((resolve, reject) => {
         db.query("SELECT * FROM ticket", (err, result) => {
@@ -426,9 +429,6 @@ console.log("a7aaaaaaaaaaaaaaa")
         res.status(400).send("Ticket ID (tid) is required");
     }
 })
-=======
-
->>>>>>> 1a17c98477ac5b3b0f904bd55611173a1a1b3aeb
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

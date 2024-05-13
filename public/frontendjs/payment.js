@@ -31,7 +31,7 @@ function main() {
             }
             return response.text();
         }).then(data => {
-            window.location.href = "/login";
+            window.location.href = "/thanks";
 
         }).catch(error => {
             alert(error.message);
