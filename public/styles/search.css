@@ -122,18 +122,17 @@ button {
 }
 
 #reserve_table {
-    width: 1000px;
-    height: 600px;
+    width: 1200px;
+    height: 800px;
 }
 
 #table_section {
-    width: 1000px;
-    max-height: 600px;
+    width: 1200px;
+    max-height: 800px;
     overflow-y: auto;
     padding-bottom: 10px;
     background-color: #121212;
     border: 20px solid #202020;
-    margin-left: 100px;
     display: none;
 }
 
@@ -175,8 +174,9 @@ tr {
 .book_button {
     width: 100px;
 }
-#logout{
-    width:50px;
+
+#logout {
+    width: 50px;
     border-radius: 360px;
     align-self: self-end;
     padding-right: 50px;
@@ -185,7 +185,9 @@ tr {
 
 #logout img {
     /* Add styles for the image */
-    width: 50px; /* Adjust size as needed */
-    height: 50px; /* Adjust size as needed */
-    
-  }
+    width: 50px;
+    /* Adjust size as needed */
+    height: 50px;
+    /* Adjust size as needed */
+
+}

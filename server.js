@@ -136,6 +136,36 @@ app.get("/logout", function (req, res) {
     res.clearCookie('userId');
     res.redirect("/login");
 });
+app.get("/forgetpassword", function (req, res) {
+    res.sendFile(path.join(__dirname, 'public', 'forgetPass.html'));
+})
+app.post("/forgetpassword", async function (req, res) {
+    try {
+        const { email, password } = req.body;
+        console.log(password);
+        console.log(email);
+
+        if (email && password) {
+            await new Promise((resolve, reject) => {
+                console.log("gg1")
+                db.query(`UPDATE passenger SET password = '${password}' WHERE email = '${email}'`, (err, result) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(result.rows);
+                    }
+                });
+            });
+            console.log("gg3")
+            res.status(200).redirect('/login');
+        } else {
+            res.status(404);
+        }
+    } catch (error) {
+        console.error('Error executing query:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
 
 app.get("/origin", async function (req, res) {
     const response = await new Promise((resolve, reject) => {
@@ -172,11 +202,18 @@ app.post("/dest", async function (req, res) {
 
 })
 
-app.post("/date", async function (req, res) {
-    const { origin, dest } = req.body
+app.post("/search", async function (req, res) {
+    const { origin, dest, date } = req.body
     if (origin && dest) {
+        if (date) {
+
+        }
         const response = await new Promise((resolve, reject) => {
-            db.query(`SELECT f_date FROM flights WHERE src_city = '${origin}' AND dest_city = '${dest}'`, (err, result) => {
+            query = `SELECT f.src_city, f.f_date, f.f_time, f.dest_city, f.duration, air.economy_price FROM flights f join plane pl on f.plane_id=pl.plane_id join aircraft air on air.aircraft_type = pl.aircraft_type WHERE f.src_city = '${origin}' AND f.dest_city = '${dest}'`
+            if (date) {
+                query += "AND f.f_date = '${date}'"
+            }
+            db.query(query, (err, result) => {
                 if (err) {
                     reject(err);
                 } else {
