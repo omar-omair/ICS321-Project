@@ -47,7 +47,7 @@ app.post("/login/accounts", async function (req, res) {
     try {
         const { email, password } = req.body;
         const response = await new Promise((resolve, reject) => {
-            db.query("SELECT email, password FROM passenger", (err, result) => {
+            db.query("SELECT email, password, user_type FROM passenger", (err, result) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -59,8 +59,16 @@ app.post("/login/accounts", async function (req, res) {
         const user = response.find(element => email === element.email && password === element.password);
         if (user) {
             res.cookie('userId', email);
-            res.status(200).send(email); // Send user data back if found
-        } else {
+            res.redirect('/booking');
+            if (user.user_type === 'user') {
+                console.log(user.user_type);
+                res.redirect('/booking');
+            }
+            else {
+                res.redirect('/admin');
+            }
+        }
+        else {
             res.status(404).send('Not Found'); // Send 404 if user not found
         }
     } catch (error) {

@@ -27,7 +27,6 @@ function main() {
             }
         }).then(data => {
             localStorage.setItem('user', JSON.stringify(data));
-            window.location.href = '/booking';
 
         }).catch(error => {
             alert(error.message);
