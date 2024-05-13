@@ -173,10 +173,17 @@ app.post("/dest", async function (req, res) {
 })
 
 app.post("/search", async function (req, res) {
-    const { origin, dest } = req.body
+    const { origin, dest, date } = req.body
     if (origin && dest) {
+        if (date) {
+
+        }
         const response = await new Promise((resolve, reject) => {
-            db.query(`SELECT f.src_city,FROM flights WHERE src_city = '${origin}' AND dest_city = '${dest}'`, (err, result) => {
+            query = `SELECT f.src_city, f.f_date, f.f_time, f.dest_city, f.duration, air.economy_price FROM flights f join plane pl on f.plane_id=pl.plane_id join aircraft air on air.aircraft_type = pl.aircraft_type WHERE f.src_city = '${origin}' AND f.dest_city = '${dest}'`
+            if (date) {
+                query += "AND f.f_date = '${date}'"
+            }
+            db.query(query, (err, result) => {
                 if (err) {
                     reject(err);
                 } else {

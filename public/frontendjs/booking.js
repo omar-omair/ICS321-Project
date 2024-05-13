@@ -49,14 +49,13 @@ async function main() {
             destSelect.innerHTML += `<option value="${dest.dest_city}">${dest.dest_city}</option>`
         });
 
-        dateLabel.innerHTML = "Date"
-        dateInput.style.display = ""
     }
 
     searchButton.addEventListener('click', async function (e) {
         e.preventDefault()
+        let flights = []
 
-        await fetch('http://localhost:3000/dest', {
+        await fetch('http://localhost:3000/search', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -68,10 +67,13 @@ async function main() {
             return response.json()
         }).then(data => {
             console.log(data)
-            destCities = data
+            flights = data
         }).catch(error => {
             alert(error.message);
         });
+
+
+
 
     })
 
