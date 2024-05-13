@@ -1,4 +1,5 @@
 window.onload = main
+let currentFlight;
 
 async function main() {
     searchButton = document.getElementById('search_button')
@@ -9,6 +10,8 @@ async function main() {
     tableSection = document.getElementById('table_section')
     bookingSection = document.getElementById('booking_section')
     reserveTable = document.getElementById('reserve_table')
+
+
 
     var currentDate = new Date();
     var minDate = currentDate.toISOString().split('T')[0];
@@ -89,44 +92,81 @@ async function main() {
         bookingSection.style.display = 'none';
 
         flights.forEach(flight => {
-            flight.f_date = new Date(flight.f_date).toISOString().split('T')[0]
             flight.f_time = flight.f_time.split(':')[0] + ":" + flight.f_time.split(':')[1]
+            const dateTime = new Date(flight.f_date);
+            const year = dateTime.getFullYear();
+            const month = dateTime.getMonth() + 1;
+            const day = dateTime.getDate();
+            const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
             reserveTable.innerHTML += `<tr>
                     <td>${flight.src_city}</td>
                     <td>${flight.dest_city}</td>
                     <td>${flight.f_time}</td>
-                    <td>${flight.f_date}</td>
+                    <td>${formattedDate}</td>
                     <td>${flight.duration} Hours</td>
                     <td>${flight.economy_price}$</td>
-                    <td><button class="book_button">Book</button></td>
+                    <td><button class="book_button" id=button_${flight.fid}>Book</button></td>
                 </tr>`
         })
 
+        let bookingButton = document.querySelector('.book_button');
 
-    })
+        bookingButton.addEventListener('click', async function (e) {
+            e.preventDefault();
+            fid = e.target.id.split("_")[1]
+            currentFlight = fid;
+            const url = "http://localhost:3000/booking_seat"
+            await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    fid: fid,
+                })
+            }).then(response => {
+                if (response.ok) {
+                    // Redirect to booking_seat.html if the response is successful
+                    window.location.href = '/booking_seat';
+                } else {
+                    // Handle errors here, if needed
+                    console.error('Error:', response.statusText);
+                }
+            }).catch(error => {
+                console.error('Error:', error);
+            });
+        });
 
-    let logout_button = document.getElementById('logout');
-    logout_button.addEventListener('click', async function (e) {
-        e.preventDefault();
-        window.location.href = '/logout'; // Redirect to login page
+        console.log("gg")
+
+
     });
 
-    function removeDuplicateOptions(selectElement) {
-        // Create an array to store unique option values 
-        let uniqueOptions = [];
+}
 
-        // Iterate through existing options 
-        for (let option of selectElement.options) {
-            // Check if the option value is not already in the uniqueOptions array 
-            if (!uniqueOptions.includes(option.value)) {
-                // Add the option value to the uniqueOptions array 
-                uniqueOptions.push(option.value);
-            } else {
-                // If the option value is a duplicate, remove the option 
-                selectElement.removeChild(option);
-            }
+let logout_button = document.getElementById('logout');
+logout_button.addEventListener('click', async function (e) {
+    e.preventDefault();
+    window.location.href = '/logout'; // Redirect to login page
+});
+
+function removeDuplicateOptions(selectElement) {
+    // Create an array to store unique option values 
+    let uniqueOptions = [];
+
+    // Iterate through existing options 
+    for (let option of selectElement.options) {
+        // Check if the option value is not already in the uniqueOptions array 
+        if (!uniqueOptions.includes(option.value)) {
+            // Add the option value to the uniqueOptions array 
+            uniqueOptions.push(option.value);
+        } else {
+            // If the option value is a duplicate, remove the option 
+            selectElement.removeChild(option);
         }
     }
-
 }
+
+
+
 

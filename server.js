@@ -166,6 +166,37 @@ app.post("/forgetpassword", async function (req, res) {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+app.get("/payment", function (req, res) {
+    res.sendFile(path.join(__dirname, 'public', 'payment.html'));
+}) 
+app.post("/payment", async function (req, res) {
+    try {
+        const { credit_number, holder_name, end_date, cvv } = req.body;
+        let email = req.cookies.userId;
+        if (credit_number && end_date && cvv) {
+            // Await the resolution of the query
+            const pidResult = await db.query(`SELECT pid FROM passenger WHERE email= '${email}'`);
+            const pid_c = pidResult.rows[0].pid; // Extract the PID from the query result
+            await new Promise((resolve, reject) => {
+                db.query(`INSERT INTO payment_info (pid, end_date, cvv, credit_card)
+                VALUES ('${pid_c}','${end_date}', '${cvv}', '${credit_number}');
+                `, (err, result) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(result.rows);
+                    }
+                });
+            });
+            res.status(200).redirect('/login');
+        } else {
+            res.status(404);
+        }
+    } catch (error) {
+        console.error('Error executing query:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
 
 app.get("/origin", async function (req, res) {
     const response = await new Promise((resolve, reject) => {
@@ -209,7 +240,7 @@ app.post("/search", async function (req, res) {
 
         }
         const response = await new Promise((resolve, reject) => {
-            query = `SELECT f.src_city, f.f_date, f.f_time, f.dest_city, f.duration, air.economy_price FROM flights f join plane pl on f.plane_id=pl.plane_id join aircraft air on air.aircraft_type = pl.aircraft_type WHERE f.src_city = '${origin}' AND f.dest_city = '${dest}'`
+            query = `SELECT f.fid, f.src_city, f.f_date, f.f_time, f.dest_city, f.duration, air.economy_price FROM flights f join plane pl on f.plane_id=pl.plane_id join aircraft air on air.aircraft_type = pl.aircraft_type WHERE f.src_city = '${origin}' AND f.dest_city = '${dest}'`
             if (date) {
                 query += "AND f.f_date = '${date}'"
             }
@@ -230,6 +261,32 @@ app.post("/search", async function (req, res) {
 
 })
 
+app.post("/booking_seat", async (req, res) => {
+    const { fid } = req.body;
+    res.cookie('currentFlight', fid);
+    res.status(200).send({ message: 'Booking successful' });
+});
+app.get("/booking_seat", async (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'booking_seats.html'));
+})
+
+
+app.get('/booking_seat/info', async (req, res) => {
+    fid = req.params.id;
+    const response = await new Promise((resolve, reject) => {
+        db.query("SELECT f.*, pl.total_seats, air.first_price, air.business_price, air.economy_price FROM flights f join plane pl on f.plane_id=pl.plane_id join aircraft air on air.aircraft_type = pl.aircraft_type WHERE f.src_city = '${origin}' AND f.dest_city = '${dest}'`", (err, result) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(result.rows);
+            }
+        });
+    });
+
+    res.json(response);
+
+})
+
 app.get("/waitlist", async function (req, res) {
     const response = await new Promise((resolve, reject) => {
         db.query("SELECT p.name, w.position FROM passenger p JOIN waitlist w ON p.pid = w.pid", (err, result) => {
@@ -240,9 +297,36 @@ app.get("/waitlist", async function (req, res) {
             }
         });
     });
-
     res.json(response);
 })
+
+
+app.post("/booking_info", async function (req, res) {
+    const { fid } = req.body
+    if (fid) {
+        const response = await new Promise((resolve, reject) => {
+            query = `SELECT f.fid, f.src_city, f.f_date, f.f_time, f.dest_city, f.duration, 
+                        air.economy_price, air.business_price, air.first_price, air.first_seats, air.business_seats, air.economy_seats
+                        FROM flights f join plane pl on f.plane_id=pl.plane_id 
+                        join aircraft air on air.aircraft_type = pl.aircraft_type 
+                        WHERE f.fid='${fid}'`
+            db.query(query, (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result.rows);
+                }
+            });
+        });
+
+        res.json(response);
+    }
+    else {
+        res.send("none")
+    }
+
+})
+
 
 app.get("/activeFlights", async function (req, res) {
     const response = await new Promise((resolve, reject) => {
@@ -256,6 +340,7 @@ app.get("/activeFlights", async function (req, res) {
     });
     res.json(response);
 })
+<<<<<<< HEAD
 app.get("/cancelledTickets", async function (req, res) {
     const response = await new Promise((resolve, reject) => {
         db.query("SELECT * FROM ticket", (err, result) => {
@@ -341,6 +426,9 @@ console.log("a7aaaaaaaaaaaaaaa")
         res.status(400).send("Ticket ID (tid) is required");
     }
 })
+=======
+
+>>>>>>> 1a17c98477ac5b3b0f904bd55611173a1a1b3aeb
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
