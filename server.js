@@ -172,11 +172,11 @@ app.post("/dest", async function (req, res) {
 
 })
 
-app.post("/date", async function (req, res) {
+app.post("/search", async function (req, res) {
     const { origin, dest } = req.body
     if (origin && dest) {
         const response = await new Promise((resolve, reject) => {
-            db.query(`SELECT f_date FROM flights WHERE src_city = '${origin}' AND dest_city = '${dest}'`, (err, result) => {
+            db.query(`SELECT f.src_city,FROM flights WHERE src_city = '${origin}' AND dest_city = '${dest}'`, (err, result) => {
                 if (err) {
                     reject(err);
                 } else {

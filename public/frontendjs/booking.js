@@ -53,5 +53,33 @@ async function main() {
         dateInput.style.display = ""
     }
 
+    searchButton.addEventListener('click', async function (e) {
+        e.preventDefault()
+
+        await fetch('http://localhost:3000/dest', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                origin: origin
+            })
+        }).then(response => {
+            return response.json()
+        }).then(data => {
+            console.log(data)
+            destCities = data
+        }).catch(error => {
+            alert(error.message);
+        });
+
+    })
+
+    let logout_button = document.getElementById('logout');
+    logout_button.addEventListener('click', async function (e) {
+        e.preventDefault();
+        window.location.href = '/logout'; // Redirect to login page
+    });
+
 }
 
