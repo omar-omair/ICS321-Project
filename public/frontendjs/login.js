@@ -24,8 +24,17 @@ function main() {
                 console.log("emaiiaiaialk not fdound error")
                 throw new Error("")
             }
+            return response.text();
         }).then(data => {
-            localStorage.setItem('user', JSON.stringify(data));
+            console.log(data)
+            if (data == "u") {
+
+                window.location.href = "/booking"
+            }
+            else if (data == "a") {
+                console.log(data)
+                window.location.href = "/admin"
+            }
 
         }).catch(error => {
             alert(error.message);

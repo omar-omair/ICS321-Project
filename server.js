@@ -59,13 +59,11 @@ app.post("/login/accounts", async function (req, res) {
         const user = response.find(element => email === element.email && password === element.password);
         if (user) {
             res.cookie('userId', email);
-            res.redirect('/booking');
-            if (user.user_type === 'user') {
-                console.log(user.user_type);
-                res.redirect('/booking');
+            if (user.user_type === 'User') {
+                res.status(200).send("u")
             }
-            else {
-                res.redirect('/admin');
+            else if (user.user_type === 'Admin') {
+                res.status(200).send("a")
             }
         }
         else {
@@ -75,6 +73,34 @@ app.post("/login/accounts", async function (req, res) {
         console.error('Error executing query:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
+})
+
+app.get("/admin", async function (req, res) {
+    var storedData = req.cookies.userId
+    if (storedData) {
+        const response = await new Promise((resolve, reject) => {
+            db.query("SELECT email, user_type FROM passenger", (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result.rows);
+                }
+            });
+        });
+
+        const user = response.find(element => storedData === element.email && element.user_type === "Admin");
+        if (user) {
+            res.sendFile(path.join(__dirname, 'public', 'admin.html'));
+        }
+        else {
+            res.redirect("/login");
+        }
+    }
+
+    else {
+        res.redirect("/login")
+    }
+
 })
 
 
@@ -88,7 +114,7 @@ app.post("/register/accounts", async function (req, res) {
                 return;
             }
             pid = result.rows[0].max_pid + 1; // Assign the incremented pid
-            let user_type = "user";
+            let user_type = "User";
             const { name, email, password, phone, address } = req.body;
             db.query(`INSERT INTO passenger VALUES(${pid}, '${name}', '${phone}', '${email}', '${address}', '${user_type}', '${password}')`, (err, result) => {
                 if (err) {
