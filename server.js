@@ -356,7 +356,7 @@ app.get("/cancelledTickets", async function (req, res) {
     });
     res.json(response);
 })
-app.get("/payment", async function (req, res) {
+app.get("/payments", async function (req, res) {
     const response1 = await new Promise((resolve, reject) => {
         db.query("SELECT ti.tid, se.seat_type from seat se join ticket ti on ti.seat_number = se.seat_number where ti.cancelled = 'f'", (err, result) => {
             if (err) {

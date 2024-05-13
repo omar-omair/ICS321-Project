@@ -86,7 +86,7 @@ async function main() {
         para.innerHTML = '';
         let payment_list = [];
 
-        await fetch("http://localhost:3000/payment").then(response => response.json()).then(data => { payment_list = data; });
+        await fetch("http://localhost:3000/payments").then(response => response.json()).then(data => { payment_list = data; });
         const heading = document.createElement('h1');
         heading.textContent = 'Payments Report:';
         para.appendChild(heading);
@@ -101,7 +101,6 @@ async function main() {
         titleID.textContent = 'Ticket ID';
         purchaseDate.textContent = 'Ticket Date';
         ticket_price.textContent = 'Price';
-
         payment_list.forEach(item => {
             const row = table.insertRow();
             const idCell = row.insertCell();
