@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles/admin.css">
     <link rel="stylesheet" href="styles/base.css">
+    <link rel="stylesheet" href="styles/admin.css">
     <script src="frontendjs/base.js" defer></script>
+    <script src="frontendjs/admin.js" defer></script>
     <title>Admin Page</title>
 </head>
 <body>
@@ -14,27 +15,32 @@
     <div id="corner_circle2"></div>
     <div id="corner_circle3"></div>
     <div id="container">
+        <button id="back"><img src="images/back_sign.png" alt="go back"></button>
         <button id="logout"><img src="images/logout.png" alt="exit"></button>
+
         <section id="admin_page">
             <h1 style="color: antiquewhite;">Choose Report To Generate:</h1>
             <div id="spaces">
                 <div >
-                    <button class="admin_buttons">Active Flight</button>
-                    <button class="admin_buttons">Percentage of Booking</button>
+                    <button class="admin_buttons" id="active_flight">Active Flight</button>
+                    <button class="admin_buttons" id="booking_percentage">Percentage of Booking</button>
                 </div>
                 <div >
-                    <button class="admin_buttons">Payments</button>
-                    <button class="admin_buttons">Waitlisted Passengers </button>
+                    <button class="admin_buttons" id="payments">Payments</button>
+                    <button class="admin_buttons" id="waitlist">Waitlisted Passengers </button>
                 </div>
                 <div >
-                    <button class="admin_buttons">Average Load Factor</button>
-                    <button class="admin_buttons">Ticket Cancelled</button>
+                    <button class="admin_buttons" id="load_factor">Average Load Factor</button>
+                    <button class="admin_buttons" id="ticket_cancelled">Ticket Cancelled</button>
                 </div>
                 <div >
-                    <button class="admin_buttons" style="background-color: antiquewhite; color: #C94C4B;">Book a Flight !</button>
+                    <button class="admin_buttons" id="booking_button" style="background-color: antiquewhite; color: #C94C4B;">Book a Flight !</button>
                 </div>
             </div>
         </section>
+        <div id="main-container">
+            <div id="para"></div>
+        </div>
 
     </div>
 </body>

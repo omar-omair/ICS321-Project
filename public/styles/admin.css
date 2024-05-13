@@ -95,9 +95,76 @@ border-radius: 20px;
     padding-bottom: 50px;
 }
 
+
 #logout img {
-    /* Add styles for the image */
-    width: 50px; /* Adjust size as needed */
-    height: 50px; /* Adjust size as needed */
-    
+    width: 50px; 
+    height: 50px;     
+}
+#back{
+    width:50px;
+    border-radius: 360px;
+    padding-right: 50px;
+    padding-bottom: 50px;
+    display: none;
+}
+
+#para{
+    color:antiquewhite;
+    justify-content: center;
+    align-items: center;
+    margin-left: 20px;
+    margin-top: 20px;
+    max-height: 650px;
+    overflow-y: auto;
+}
+#back img {
+    width: 50px; 
+    height: 50px; 
   }
+#main-container {
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    border-color: #C94C4B;
+    border-style: solid;
+    background-color: #303030;
+    width: 600px;
+    height: 700px;
+    margin-left: 400px;
+    overflow: hidden; 
+}
+
+
+
+.waitlist-table,
+.activeFlights-table {
+    width: 96.5%; 
+    border-collapse: collapse;
+}
+
+.waitlist-table th,
+.waitlist-table td,
+.activeFlights-table th,
+.activeFlights-table td {
+    padding: 8px;
+    border: 1px solid antiquewhite;
+    text-align: center;
+}
+
+.waitlist-table th,
+.activeFlights-table th {
+    background-color: antiquewhite;
+}
+
+.promote_button {
+    background-color: #C94C4B;
+    width: 130px;
+    border-radius: 30px;
+}
+::-webkit-scrollbar {
+    background-color: #121212;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #C94C4B;
+}

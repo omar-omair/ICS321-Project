@@ -193,7 +193,32 @@ app.post("/date", async function (req, res) {
 
 })
 
+app.get("/waitlist", async function (req, res) {
+    const response = await new Promise((resolve, reject) => {
+        db.query("SELECT p.name, w.position FROM passenger p JOIN waitlist w ON p.pid = w.pid", (err, result) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(result.rows);
+            }
+        });
+    });
 
+    res.json(response);
+})
+
+app.get("/activeFlights", async function (req, res) {
+    const response = await new Promise((resolve, reject) => {
+        db.query("SELECT fid,src_city,dest_city,f_time,f_date FROM flights", (err, result) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(result.rows);
+            }
+        });
+    });
+    res.json(response);
+})
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
