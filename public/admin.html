@@ -34,12 +34,35 @@
                     <button class="admin_buttons" id="ticket_cancelled">Ticket Cancelled</button>
                 </div>
                 <div >
+                    <button class="admin_buttons" id="adding_button">Add Ticket</button>
+                    <button class="admin_buttons" id="removing_button">Remove Ticket</button>
+                </div>
+                <div>
                     <button class="admin_buttons" id="booking_button" style="background-color: antiquewhite; color: #C94C4B;">Book a Flight !</button>
                 </div>
             </div>
         </section>
         <div id="main-container">
-            <div id="para"></div>
+            <div id="para">
+                <div id="remove">
+                    <h1>Enter Ticket ID to Remove:<h1>
+                    <div id="remove-content">
+                        <input type="text" id="tid" placeholder="Ticket ID"  required>
+                        <button style="border-radius: 30px; width: 180px; margin-left: 15%;" id="remove_button">Remove Ticket</button>
+                    </div>
+                </div>
+                <div id="add">
+                    <h1>Enter Ticket Details to Add:<h1>
+                    <div id="add-content">
+                        <input type="date" id="bookDate" placeholder="Booking Date"  required>
+                        <input type="text" id="weight" placeholder="Weight"  required>
+                        <input type="text" id="pid" placeholder="Plane ID"  required>
+                        <input type="text" id="fid" placeholder="Flight ID"  required>
+                        <input type="text" id="seat_number" placeholder="Seat Number"  required>
+                        <button style="border-radius: 30px; width: 180px; margin-left: 15%;">Add Ticket</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
     </div>

@@ -4,6 +4,8 @@ async function main() {
     let para=document.getElementById('para')
     let back=document.getElementById('back');
     let report=document.getElementById('main-container');
+    let addPage=document.getElementById('add');
+    let removePage=document.getElementById('remove');
     report.style.display='none';
     let admin_page=document.getElementById('admin_page');
     let booking_button = document.getElementById('booking_button');
@@ -27,7 +29,7 @@ async function main() {
 
         await fetch("http://localhost:3000/activeFlights").then(response => response.json()).then(data => { flights_list = data; });
         const heading = document.createElement('h1');
-        heading.textContent = 'The Active Flights Report:';
+        heading.textContent = 'Active Flights Report:';
         para.appendChild(heading);
         const table = document.createElement('table');
         table.classList.add('activeFlights-table');
@@ -77,11 +79,48 @@ async function main() {
     let payments = document.getElementById('payments');
     payments.addEventListener('click', async function (e) {
         e.preventDefault();
-            window.location.href = '/report';
+        admin_page.style.display='none';
+        logout.style.display='none';
+        report.style.display='block';
+        back.style.display='block';
+        para.innerHTML = '';
+        let payment_list = [];
+
+        await fetch("http://localhost:3000/payment").then(response => response.json()).then(data => { payment_list = data; });
+        const heading = document.createElement('h1');
+        heading.textContent = 'Payments Report:';
+        para.appendChild(heading);
+        const table = document.createElement('table');
+        table.classList.add('activeFlights-table');
+
+        const headerRow = table.createTHead().insertRow();
+        const titleID = headerRow.insertCell();
+        const purchaseDate = headerRow.insertCell();
+        const ticket_price = headerRow.insertCell();
+
+        titleID.textContent = 'Ticket ID';
+        purchaseDate.textContent = 'Ticket Date';
+        ticket_price.textContent = 'Price';
+
+        payment_list.forEach(item => {
+            const row = table.insertRow();
+            const idCell = row.insertCell();
+            const dateCell = row.insertCell();
+            const priceCell = row.insertCell();
+            idCell.textContent = item.tid;
+            const dateTime = new Date(item.purchase_date);
+            const year = dateTime.getFullYear(); 
+            const month = dateTime.getMonth() + 1; 
+            const day = dateTime.getDate(); 
+            const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+            dateCell.textContent = formattedDate;
+            priceCell.textContent = item.price;
+        });
+        para.appendChild(table);
     });
     let waitlist = document.getElementById('waitlist');
     waitlist.addEventListener('click', async function (e) {
-      
+        e.preventDefault();
         admin_page.style.display='none';
         logout.style.display='none';
         report.style.display='block';
@@ -91,7 +130,7 @@ async function main() {
 
         await fetch("http://localhost:3000/waitlist").then(response => response.json()).then(data => { wait_list = data; });
         const heading = document.createElement('h1');
-        heading.textContent = 'The Waitlist Report:';
+        heading.textContent = 'Waitlist Report:';
         para.appendChild(heading);
          const table = document.createElement('table');
         table.classList.add('waitlist-table');
@@ -130,7 +169,89 @@ async function main() {
     let ticket_cancelled = document.getElementById('ticket_cancelled');
     ticket_cancelled.addEventListener('click', async function (e) {
         e.preventDefault();
-            window.location.href = '/report';
-    });
+        admin_page.style.display='none';
+        logout.style.display='none';
+        report.style.display='block';
+        back.style.display='block';
+        para.innerHTML = '';
+        let tickets_list = [];
 
+        await fetch("http://localhost:3000/cancelledTickets").then(response => response.json()).then(data => { tickets_list = data; });
+        const heading = document.createElement('h1');
+        heading.textContent = 'The Cancelled Tickets Report:';
+        para.appendChild(heading);
+        const table = document.createElement('table');
+        table.classList.add('activeFlights-table');
+
+        const headerRow = table.createTHead().insertRow();
+        const ticketID = headerRow.insertCell();
+        const planeID = headerRow.insertCell();
+        const flightID = headerRow.insertCell();
+        const seatNumber = headerRow.insertCell();
+        ticketID.textContent = 'Ticket ID';
+        planeID.textContent = 'Plane ID';
+        flightID.textContent = 'Flight ID';
+        seatNumber.textContent = 'Seat Number';
+
+        tickets_list.forEach(item => {
+            if(item.cancelled){
+            const row = table.insertRow();
+            const ticket = row.insertCell();
+            const plane = row.insertCell();
+            const flight = row.insertCell();
+            const seat = row.insertCell();
+            ticket.textContent = item.tid;
+            plane.textContent = item.pid;
+            flight.textContent = item.fid;
+            seat.textContent = item.seat_number;
+            }
+        });
+        para.appendChild(table);
+    });
+    let adding_button = document.getElementById('adding_button');
+    adding_button.addEventListener('click', async function (e) {
+        e.preventDefault();
+        admin_page.style.display='none';
+        logout.style.display='none';
+        report.style.display='block';
+        back.style.display='block';
+        addPage.style.display='block';
+    });
+    let removing_button = document.getElementById('removing_button');
+    removing_button.addEventListener('click', async function (e) {
+        e.preventDefault();
+        admin_page.style.display='none';
+        logout.style.display='none';
+        report.style.display='block';
+        back.style.display='block';
+        removePage.style.display='block';
+        let removed_ticket=document.getElementById('tid');
+        let tid = removed_ticket.value;
+        let remove_button = document.getElementById('remove_button');
+        remove_button.addEventListener('click', async function (e) {
+            e.preventDefault();
+
+            await fetch('http://localhost:3000/allTicketsID', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ tid: tid }) // Send 'tid' in the request body
+        }).then(response => {
+            if (response.ok) {
+                // Handle successful response (status 200)
+                alert("Ticket successfully deleted!");
+                location.reload(); // Reload the page if needed
+            } else {
+                // Handle other HTTP error statuses
+                alert("Failed to delete ticket!");
+            }
+        }).catch(error => {
+            // Handle network or other errors
+            console.error("Error deleting ticket:", error);
+            alert("Failed to delete ticket!");
+        });
+        
+    });
+});
 }
