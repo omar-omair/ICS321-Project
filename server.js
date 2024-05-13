@@ -275,7 +275,8 @@ app.post("/booking_info", async function (req, res) {
     if (fid) {
         const response = await new Promise((resolve, reject) => {
             query = `SELECT f.fid, f.src_city, f.f_date, f.f_time, f.dest_city, f.duration, 
-                        air.economy_price, air.business_price, air.first_price, air.first_seats, air.business_seats, air.economy_seats
+                        air.economy_price, air.business_price, air.first_price, air.first_seats, air.business_seats, air.economy_seats,
+                        pl.total_seats
                         FROM flights f join plane pl on f.plane_id=pl.plane_id 
                         join aircraft air on air.aircraft_type = pl.aircraft_type 
                         WHERE f.fid='${fid}'`
