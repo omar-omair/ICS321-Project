@@ -4,6 +4,7 @@ function main() {
     let register_button = document.getElementById('register_button')
     register_button.addEventListener('click', async function (e) {
         e.preventDefault()
+        register_button.disabled=true;
         let emailInput = document.getElementById('email')
         let passwordInput = document.getElementById('password')
         let phoneInput = document.getElementById('phone')
@@ -40,5 +41,5 @@ function main() {
             alert(error.message);
         });
 
-    })
+   })
 }

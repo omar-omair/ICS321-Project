@@ -72,25 +72,36 @@ app.post("/login/accounts", async function (req, res) {
 
 app.post("/register/accounts", async function (req, res) {
     try {
-        let pid = 99;
-        let user_type = "user";
-        const { name, email, password, phone, address } = req.body;
-        db.query(`INSERT INTO passenger VALUES(${pid}, '${name}', '${phone}', '${email}', '${address}', '${user_type}', '${password}')`, (err, result) => {
+        let pid;
+        db.query(`SELECT MAX(pid) AS max_pid FROM passenger`, (err, result) => {
             if (err) {
                 console.error('Error executing query:', err);
+                res.status(500).json({ error: 'Internal Server Error' });
+                return;
             }
+            pid = result.rows[0].max_pid + 1; // Assign the incremented pid
+            let user_type = "user";
+            const { name, email, password, phone, address } = req.body;
+            db.query(`INSERT INTO passenger VALUES(${pid}, '${name}', '${phone}', '${email}', '${address}', '${user_type}', '${password}')`, (err, result) => {
+                if (err) {
+                    console.error('Error executing query:', err);
+                    res.status(500).json({ error: 'Internal Server Error' });
+                    return;
+                }
+                res.cookie('userId', email);
+                res.status(200).send(email);
+            });
         });
-
-        res.cookie('userId', email);
-        res.status(200).send(email);
-
-
     } catch (error) {
         console.error('Error executing query:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 })
 
+app.get("/logout", function (req, res) {
+    res.clearCookie('userId');
+    res.redirect("/login");
+});
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
