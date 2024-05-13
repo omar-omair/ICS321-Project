@@ -169,6 +169,10 @@ app.post("/forgetpassword", async function (req, res) {
 app.get("/payment", function (req, res) {
     res.sendFile(path.join(__dirname, 'public', 'payment.html'));
 }) 
+
+app.get("/thanks", function (req, res) {
+    res.sendFile(path.join(__dirname, 'public', 'thanks.html'));
+}) 
 app.post("/payment", async function (req, res) {
     try {
         const { credit_number, holder_name, end_date, cvv } = req.body;
@@ -188,7 +192,7 @@ app.post("/payment", async function (req, res) {
                     }
                 });
             });
-            res.status(200).redirect('/login');
+            res.status(200).redirect('/thanks');
         } else {
             res.status(404);
         }
