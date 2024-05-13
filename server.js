@@ -136,6 +136,43 @@ app.get("/logout", function (req, res) {
     res.clearCookie('userId');
     res.redirect("/login");
 });
+app.get("/forgetpassword", function (req, res) {
+    res.sendFile(path.join(__dirname, 'public', 'forgetPass.html'));
+})
+app.post("/forgetpassword", async function (req, res) {
+    try {
+        const { email, new_password } = req.body;
+        // Check if the email exists in the database
+        const response = await new Promise((resolve, reject) => {
+            db.query(`SELECT * FROM passenger WHERE email = '${email}'`, (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result.rows);
+                }
+            });
+        });
+
+        // If the email exists, update the password
+        if (response) {
+            await new Promise((resolve, reject) => {
+                db.query(`UPDATE passenger SET password = '${new_password}' WHERE email = '${email}'`, (err, result) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve();
+                    }
+                });
+            });
+            res.status(200).send("Password updated successfully");
+        } else {
+            res.status(404).send("Email not found");
+        }
+    } catch (error) {
+        console.error('Error executing query:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
