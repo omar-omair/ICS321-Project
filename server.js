@@ -209,10 +209,61 @@ app.post("/search", async function (req, res) {
 
         }
         const response = await new Promise((resolve, reject) => {
-            query = `SELECT f.src_city, f.f_date, f.f_time, f.dest_city, f.duration, air.economy_price FROM flights f join plane pl on f.plane_id=pl.plane_id join aircraft air on air.aircraft_type = pl.aircraft_type WHERE f.src_city = '${origin}' AND f.dest_city = '${dest}'`
+            query = `SELECT f.fid, f.src_city, f.f_date, f.f_time, f.dest_city, f.duration, air.economy_price FROM flights f join plane pl on f.plane_id=pl.plane_id join aircraft air on air.aircraft_type = pl.aircraft_type WHERE f.src_city = '${origin}' AND f.dest_city = '${dest}'`
             if (date) {
                 query += "AND f.f_date = '${date}'"
             }
+            db.query(query, (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result.rows);
+                }
+            });
+        });
+
+        res.json(response);
+    }
+    else {
+        res.send("none")
+    }
+
+})
+
+app.post("/booking_seat", async (req, res) => {
+    const { fid } = req.body;
+    res.cookie('currentFlight', fid);
+    res.status(200).send({ message: 'Booking successful' });
+});
+app.get("/booking_seat", async (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'booking_seats.html'));
+})
+
+
+app.get('/booking_seat/info', async (req, res) => {
+    fid = req.params.id;
+    const response = await new Promise((resolve, reject) => {
+        db.query("SELECT f.*, pl.total_seats, air.first_price, air.business_price, air.economy_price FROM flights f join plane pl on f.plane_id=pl.plane_id join aircraft air on air.aircraft_type = pl.aircraft_type WHERE f.src_city = '${origin}' AND f.dest_city = '${dest}'`", (err, result) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(result.rows);
+            }
+        });
+    });
+
+
+})
+
+app.post("/booking_info", async function (req, res) {
+    const { fid } = req.body
+    if (fid) {
+        const response = await new Promise((resolve, reject) => {
+            query = `SELECT f.fid, f.src_city, f.f_date, f.f_time, f.dest_city, f.duration, 
+                        air.economy_price, air.business_price, air.first_price, air.first_seats, air.business_seats, air.economy_seats
+                        FROM flights f join plane pl on f.plane_id=pl.plane_id 
+                        join aircraft air on air.aircraft_type = pl.aircraft_type 
+                        WHERE f.fid='${fid}'`
             db.query(query, (err, result) => {
                 if (err) {
                     reject(err);
