@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles/search.css">
-    <script src="frontendjs/base.js" defer></script>
+    <script src="frontendjs/booking.js" defer></script>
     <title>Booking</title>
 </head>
 <body>
@@ -21,26 +21,14 @@
                 <div id="blackdiv">
                     <p id="origin_label">Origin</p>
                     <p id="dest_label">Destination</p>
-                    <p id="date_label">Date</p>
+                    <p id="date_label"></p>
                     <select id="origin" name="origin">
-                        <option value="usa">United States</option>
-                        <option value="canada">Canada</option>
-                        <option value="uk">United Kingdom</option>
-                        <option value="france">France</option>
-                        <option value="germany">Germany</option>
-                        <option value="japan">Japan</option>
                     </select>
                     <select id="destination" name="destination">
-                        <option value="usa">United States</option>
-                        <option value="canada">Canada</option>
-                        <option value="uk">United Kingdom</option>
-                        <option value="france">France</option>
-                        <option value="germany">Germany</option>
-                        <option value="japan">Japan</option>
                     </select>
-                <input type="date" id="departure" name="departure">
+                <input type="date" id="departure" name="departure" style="display:none;">
             </div>
-                <button type="submit">Search</button>
+                <button type="submit" id="search_button">Search</button>
             </form>
         </div>
     </section>

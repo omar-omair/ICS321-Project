@@ -174,6 +174,63 @@ app.post("/forgetpassword", async function (req, res) {
     }
 });
 
+app.get("/origin", async function (req, res) {
+    const response = await new Promise((resolve, reject) => {
+        db.query("SELECT src_city FROM flights", (err, result) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(result.rows);
+            }
+        });
+    });
+
+    res.json(response);
+})
+
+app.post("/dest", async function (req, res) {
+    let { origin } = req.body
+    if (origin) {
+        const response = await new Promise((resolve, reject) => {
+            db.query(`SELECT dest_city FROM flights WHERE src_city = '${origin}'`, (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result.rows);
+                }
+            });
+        });
+
+        res.json(response);
+    }
+    else {
+        res.send("none")
+    }
+
+})
+
+app.post("/search", async function (req, res) {
+    const { origin, dest } = req.body
+    if (origin && dest) {
+        const response = await new Promise((resolve, reject) => {
+            db.query(`SELECT f.src_city,FROM flights WHERE src_city = '${origin}' AND dest_city = '${dest}'`, (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result.rows);
+                }
+            });
+        });
+
+        res.json(response);
+    }
+    else {
+        res.send("none")
+    }
+
+})
+
+
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
