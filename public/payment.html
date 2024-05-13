@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>payment</title>
     <link rel="stylesheet" href="styles/payment.css">
+    <script src ="frontendjs/payment.js" defer></script>
 </head>
 <body>
     <div class="container">
@@ -13,25 +14,8 @@
             <input type="text" id="cardHolderName" name="cardHolderName" placeholder = "Card Holder Name"required>
             <input type="date" id="endDate" name="endDate" min=""required>
             <input type="text" id="cvv" name="cvv" maxlength='3' placeholder = "CVV"required>
-            <button type="submit">Pay</button>
+            <button type="submit" id="payButton">Pay</button>
         </form>
     </div>
-    
-<script>
-    // Get today's date in the format YYYY-MM-DD
-    var today = new Date().toISOString().split('T')[0];
-    // Set the minimum date for the input element
-    document.getElementById("endDate").min = today;
-    const numericInput1 = document.getElementById('creditCardNum');
-    numericInput1.addEventListener('input', function(event) {
-        // Remove any non-numeric characters
-        this.value = this.value.replace(/\D/g, '');
-    });
-    const numericInput2 = document.getElementById('cvv');
-    numericInput2.addEventListener('input', function(event) {
-        // Remove any non-numeric characters
-        this.value = this.value.replace(/\D/g, '');
-    });
-</script>
 </body>
 </html>

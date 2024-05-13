@@ -22,7 +22,7 @@ body {
 #admin_page {
     display: flex;
     flex-direction: column;
-    margin-top: 70px;
+    margin-top: 10px;
     text-align: center;
     font-size: large;
     width: 55%;
@@ -167,4 +167,45 @@ border-radius: 20px;
 
 ::-webkit-scrollbar-thumb {
     background-color: #C94C4B;
+}
+
+#remove{
+    display: none;
+    justify-content: center;
+    align-items: center;
+    margin-left: 1px;
+
+
+}
+#add{
+    display: none;
+    justify-content: center;
+    align-items: center;
+    margin-left: 1px;
+
+}
+
+#remove * {
+    margin-top: 30px
+}
+#add * {
+    margin-top: 30px
+}
+#add-content{
+    margin-left: 20%;
+}
+#remove-content{
+    margin-left: 20%;
+}
+input[type="date"] {
+    width: 300px;
+    height: 45px;
+    background-color: #121212;
+    border: none;
+    color: #C94C4B;
+    padding-left: 10px;
+    font-family: "Inter";
+    border-radius: 3px;
+    border: solid 1px #C94C4B;
+
 }

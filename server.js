@@ -166,6 +166,41 @@ app.post("/forgetpassword", async function (req, res) {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+app.get("/payment", function (req, res) {
+    res.sendFile(path.join(__dirname, 'public', 'payment.html'));
+}) 
+
+app.get("/thanks", function (req, res) {
+    res.sendFile(path.join(__dirname, 'public', 'thanks.html'));
+}) 
+app.post("/payment", async function (req, res) {
+    try {
+        const { credit_number, holder_name, end_date, cvv } = req.body;
+        let email = req.cookies.userId;
+        if (credit_number && end_date && cvv) {
+            // Await the resolution of the query
+            const pidResult = await db.query(`SELECT pid FROM passenger WHERE email= '${email}'`);
+            const pid_c = pidResult.rows[0].pid; // Extract the PID from the query result
+            await new Promise((resolve, reject) => {
+                db.query(`INSERT INTO payment_info (pid, end_date, cvv, credit_card)
+                VALUES ('${pid_c}','${end_date}', '${cvv}', '${credit_number}');
+                `, (err, result) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(result.rows);
+                    }
+                });
+            });
+            res.status(200).redirect('/thanks');
+        } else {
+            res.status(404);
+        }
+    } catch (error) {
+        console.error('Error executing query:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
 
 app.get("/origin", async function (req, res) {
     const response = await new Promise((resolve, reject) => {
@@ -310,7 +345,91 @@ app.get("/activeFlights", async function (req, res) {
     });
     res.json(response);
 })
+app.get("/cancelledTickets", async function (req, res) {
+    const response = await new Promise((resolve, reject) => {
+        db.query("SELECT * FROM ticket", (err, result) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(result.rows);
+            }
+        });
+    });
+    res.json(response);
+})
+app.get("/payments", async function (req, res) {
+    const response1 = await new Promise((resolve, reject) => {
+        db.query("SELECT ti.tid, se.seat_type from seat se join ticket ti on ti.seat_number = se.seat_number where ti.cancelled = 'f'", (err, result) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(result.rows);
+            }
+        });
+    });
+    const response2 = await new Promise((resolve, reject) => {
+        db.query("SELECT ti.tid, ti.purchase_date, air.business_price, air.first_price, air.economy_price from ticket ti join flights fl on ti.fid = fl.fid join plane pl on pl.plane_id = fl.plane_id join aircraft air on pl.aircraft_type = air.aircraft_type where ti.cancelled = 'f'", (err, result) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(result.rows);
+            }
+        });
+    });
+    let response=[];
+    response2.forEach(element2 => {
+        let price=null;
 
+        const matchedElement = response1.find(element1 => {
+            return element1.tid === element2.tid;
+        });
+    
+        if (matchedElement.seat_type === 'Business Class') {
+            price = element2.business_price;
+        } else if (matchedElement.seat_type === 'Economy Class') {
+            price = element2.economy_price;
+        } else {
+            price = element2.first_price;
+        }
+        const resultObj = {
+            tid: element2.tid,
+            purchase_date: element2.purchase_date,
+            price: price
+        };
+    
+        response.push(resultObj);
+    });
+    res.json(response);
+})
+app.post("/allTicketsID", async function (req, res) {
+    const { tid } = req.body;
+    console.log(tid)
+
+    if (tid) {
+        try {
+
+            console.log("a7aaaaaaaaaaaaaaa")
+
+            await new Promise((resolve, reject) => {
+                db.query(`DELETE FROM ticket WHERE tid = ${tid}`, (err, result) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(result.rows);
+                    }
+                });
+            });
+console.log("a7aaaaaaaaaaaaaaa")
+            res.status(200).send("Ticket successfully deleted!");
+        } catch (error) {
+            console.error("Error deleting ticket:", error);
+            res.status(500).send("Internal Server Error");
+        }
+    } else {
+        // Handle case where 'tid' is missing in the request body
+        res.status(400).send("Ticket ID (tid) is required");
+    }
+})
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
