@@ -141,32 +141,25 @@ app.get("/forgetpassword", function (req, res) {
 })
 app.post("/forgetpassword", async function (req, res) {
     try {
-        const { email, new_password } = req.body;
-        // Check if the email exists in the database
-        const response = await new Promise((resolve, reject) => {
-            db.query(`SELECT * FROM passenger WHERE email = '${email}'`, (err, result) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(result.rows);
-                }
-            });
-        });
+        const { email, password } = req.body;
+        console.log(password);
+        console.log(email);
 
-        // If the email exists, update the password
-        if (response) {
+        if (email && password) {
             await new Promise((resolve, reject) => {
-                db.query(`UPDATE passenger SET password = '${new_password}' WHERE email = '${email}'`, (err, result) => {
+                console.log("gg1")
+                db.query(`UPDATE passenger SET password = '${password}' WHERE email = '${email}'`, (err, result) => {
                     if (err) {
                         reject(err);
                     } else {
-                        resolve();
+                        resolve(result.rows);
                     }
                 });
             });
-            res.status(200).send("Password updated successfully");
+            console.log("gg3")
+            res.status(200).redirect('/login');
         } else {
-            res.status(404).send("Email not found");
+            res.status(404);
         }
     } catch (error) {
         console.error('Error executing query:', error);

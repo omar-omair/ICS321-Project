@@ -6,6 +6,8 @@ async function main() {
     destSelect = document.getElementById('destination')
     dateLabel = document.getElementById('date_label')
     dateInput = document.getElementById('departure')
+    tableSection = document.getElementById('table_section')
+    bookingSection = document.getElementById('booking_section')
 
     var currentDate = new Date();
     var minDate = currentDate.toISOString().split('T')[0];
@@ -72,7 +74,8 @@ async function main() {
             alert(error.message);
         });
 
-
+        tableSection.style.display = '';
+        bookingSection.style.display = 'none';
 
 
     })
