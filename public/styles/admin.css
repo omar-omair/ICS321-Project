@@ -87,3 +87,17 @@ border-radius: 20px;
     border: 1px solid #C94C4B;
 
 }
+#logout{
+    width:50px;
+    border-radius: 360px;
+    align-self: self-end;
+    padding-right: 50px;
+    padding-bottom: 50px;
+}
+
+#logout img {
+    /* Add styles for the image */
+    width: 50px; /* Adjust size as needed */
+    height: 50px; /* Adjust size as needed */
+    
+  }

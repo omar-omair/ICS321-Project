@@ -4,7 +4,6 @@ function main() {
     let login_button = document.getElementById('login_button')
     login_button.addEventListener('click', async function (e) {
         e.preventDefault()
-        console.log("gg")
         let emailInput = document.getElementById('email')
         let passwordInput = document.getElementById('password')
         let test_email = emailInput.value
