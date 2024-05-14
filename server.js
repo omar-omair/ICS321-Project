@@ -7,7 +7,6 @@ const db = require('./db.js');
 const path = require('path');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const fetch = require('node-fetch');
 
 app.use(express.static("public"));
 
@@ -524,7 +523,7 @@ app.get('/user', async (req, res) => {
 })
 app.get('/bookingPercentage', async (req, res) => {
     response = await await new Promise((resolve, reject) => {
-        db.query("SELECT f.fid,ROUND((COUNT(t.tid) * 100.0 / p.total_seats), 2),f.f_date AS booking_percentage FROM flights f LEFT JOIN ticket t ON f.fid = t.fid LEFT JOIN plane p ON f.plane_id = p.plane_id GROUP BY f.fid, p.total_seats", (err, result) => {
+        db.query("SELECT f.fid,ROUND((COUNT(t.tid) * 100.0 / p.total_seats), 2) AS booking_percentage,f.f_date FROM flights f LEFT JOIN ticket t ON f.fid = t.fid LEFT JOIN plane p ON f.plane_id = p.plane_id GROUP BY f.fid, p.total_seats", (err, result) => {
             if (err) {
                 reject(err);
             }

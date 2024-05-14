@@ -209,3 +209,13 @@ input[type="date"] {
     border: solid 1px #C94C4B;
 
 }
+#book_page{
+    display: none;
+    justify-content: center;
+    align-items: center;
+    margin-left: 1px;
+}
+
+#book_page * {
+    margin-top: 30px;
+}

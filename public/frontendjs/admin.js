@@ -6,6 +6,7 @@ async function main() {
     let report = document.getElementById('main-container');
     let addPage = document.getElementById('add');
     let removePage = document.getElementById('remove');
+    let book_page=document.getElementById('book_page');
     report.style.display = 'none';
     let admin_page = document.getElementById('admin_page');
     let booking_button = document.getElementById('booking_button');
@@ -74,7 +75,54 @@ async function main() {
     let booking_percentage = document.getElementById('booking_percentage');
     booking_percentage.addEventListener('click', async function (e) {
         e.preventDefault();
-        window.location.href = '/report';
+        admin_page.style.display = 'none';
+        logout.style.display = 'none';
+        report.style.display = 'block';
+        back.style.display = 'block';
+        book_page.style.display='block';
+    });
+    
+    let percentage_button=document.getElementById('percentageButton')
+    percentage_button.addEventListener('click',async function(e){
+        e.preventDefault();
+        let givenDate=document.getElementById('bookDate2');
+        let givenDateValue=givenDate.value;
+        let booking_list = [];
+        para.innerHTML = '';
+
+        await fetch("http://localhost:3000/bookingPercentage").then(response => response.json()).then(data => { booking_list = data; });
+        const table = document.createElement('table');
+        table.classList.add('activeFlights-table');
+
+        const headerRow = table.createTHead().insertRow();
+        const flightID = headerRow.insertCell();
+        const percentage = headerRow.insertCell();
+        flightID.textContent = 'Flight ID';
+        percentage.textContent = 'Booking Percentage';
+        booking_list.forEach(item => {
+            const dateTime = new Date(item.f_date);
+            const year = dateTime.getFullYear();
+            const month = dateTime.getMonth() + 1;
+            const day = dateTime.getDate();
+            const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+            
+            const dateTime2 = new Date(givenDateValue);
+            const year2 = dateTime2.getFullYear();
+            const month2 = dateTime2.getMonth() + 1;
+            const day2 = dateTime2.getDate();
+            const formattedDate2 = `${year2}-${month2.toString().padStart(2, '0')}-${day2.toString().padStart(2, '0')}`;
+            
+         
+
+            if(formattedDate === formattedDate2){
+                const row = table.insertRow();
+                const idCell = row.insertCell();
+                const percentageCell = row.insertCell();
+                idCell.textContent = item.fid;
+                percentageCell.textContent = item.booking_percentage;
+            }
+        });
+        para.appendChild(table);
     });
     let payments = document.getElementById('payments');
     payments.addEventListener('click', async function (e) {
