@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/base.css">
+    <link rel="stylesheet" href="styles/admin.css">
+    <script src="frontendjs/base.js" defer></script>
+    <script src="frontendjs/ui.js" defer></script>
+    <title>UI Page</title>
+</head>
+<body>
+    
+    <div id="corner_circle"></div>
+    <div id="corner_circle2"></div>
+    <div id="corner_circle3"></div>
+    <div id="container">
+        <button id="back"><img src="images/back_sign.png" alt="go back"></button>
+        <button id="logout"><img src="images/logout.png" alt="exit"></button>
+
+        <section id="admin_page">
+            <h1 style="color: antiquewhite;">My Tickets</h1>
+            <div id="spaces">
+                <div >
+                    <button class="admin_buttons" id="adding_button">Show MY Ticket</button>
+                    <button class="admin_buttons" id="removing_button">Cancel Ticket</button>
+                </div>
+                <div>
+                    <button class="admin_buttons" id="edit_button">Edit Ticket</button>
+                    <button class="admin_buttons" id="booking_button" style="background-color: antiquewhite; color: #C94C4B;">Book a Flight !</button>
+                </div>
+            </div>
+        </section>
+        <div id="main-container">
+            <div id="para">
+                <div id="remove">
+                    <h1>Enter Ticket ID to Cancel:<h1>
+                    <div id="remove-content">
+                        <input type="text" id="tid" placeholder="Ticket ID"  required>
+                        <button style="border-radius: 30px; width: 180px; margin-left: 15%;" id="remove_button">Cancell Ticket</button>
+                    </div>
+                </div>
+                <div id="edit">
+                    <h1>Enter Ticket ID to Edit it's Seat Number:<h1>
+                    <div id="edit-content">
+                        <input type="text" id="tid5" placeholder="Ticket ID"  required>
+                        <input type="text" id="seat" placeholder="New Seat Number"  required>
+                        <button style="border-radius: 30px; width: 180px; margin-left: 15%;" id="editbutton">Edit Ticket</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

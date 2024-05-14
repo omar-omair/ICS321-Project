@@ -160,7 +160,7 @@ logout_button.addEventListener('click', async function (e) {
 let myTicket = document.getElementById('myTicket');
 myTicket.addEventListener('click', async function (e) {
     e.preventDefault();
-    window.location.href = '/admin'; // Redirect to login page
+    window.location.href = '/UI'; // Redirect to login page
 });
 function removeDuplicateOptions(selectElement) {
     // Create an array to store unique option values 

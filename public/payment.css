@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+html {
+    overflow-x: hidden;
+    font-family: "Inter";
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+body {
+    background-color: #121212;
+}
+#paymentForm{
+display: flex;
+   /* Rectangle 2 */
+flex-direction: column;
+border-radius: 15px;
+padding-top: 30px;
+align-items: center;
+row-gap: 40px;
+}
+#endDate{
+    width: 500px;
+    height: 45px;
+    background-color: #121212;
+    color: #C94C4B;
+    border-radius: 10px;
+    padding-left: 10px;
+    border-color: #C94C4B;
+}
+input[type=text]{
+    width: 500px;
+    border-radius: 10px;
+    padding-left: 10px;
+}
+button[type=submit]{
+    width: 200px;
+    background-color: #121212;
+    border-radius: 20px;
+    font-size: 20px;
+}

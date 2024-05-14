@@ -75,7 +75,7 @@ app.post("/login/accounts", async function (req, res) {
     }
 })
 
-app.get("/admin", async function (req, res) {
+app.get("/UI", async function (req, res) {
     var storedData = req.cookies.userId
     if (storedData) {
         const response = await new Promise((resolve, reject) => {
@@ -93,7 +93,8 @@ app.get("/admin", async function (req, res) {
             res.sendFile(path.join(__dirname, 'public', 'admin.html'));
         }
         else {
-            res.redirect("/login");
+            res.sendFile(path.join(__dirname, 'public', 'ui.html'));
+
         }
     }
 

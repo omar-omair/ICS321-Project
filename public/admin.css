@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+html {
+    overflow-x: hidden;
+    font-family: "Inter";
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+body {
+    background-color: #121212;
+}
+
+#admin_page {
+    display: flex;
+    flex-direction: column;
+    margin-top: 70px;
+    text-align: center;
+    font-size: large;
+    width: 55%;
+    background-color: #404040;
+    padding: 30px;
+    border-radius: 60px;
+    margin-left: 26%;
+    border: 2px solid #C94C4B;
+}
+.admin_buttons{
+width: 304px;
+height: 75px;
+left: 307px;
+top: 308px;
+font-size: 26px;
+color: antiquewhite;
+background: #C94C4B;
+border-radius: 20px;
+}
+.admin_buttons:hover{
+    background: #C94C4B;
+    color: #404040;
+}
+
+#spaces *{
+    margin: 12px 17px;
+}
+#corner_circle {
+    box-sizing: border-box;
+    position: absolute;
+    width: 438px;
+    height: 438px;
+    left: -249px;
+    top: 501px;
+    border-radius: 100%;
+    background: #202020;
+    z-index: 3;
+    border: 1px solid #C94C4B;
+}
+
+
+
+#corner_circle2 {
+    box-sizing: border-box;
+    position: absolute;
+    width: 572px;
+    height: 572px;
+    left: -316px;
+    border-radius: 100%;
+    top: 434px;
+    background: #252525;
+    z-index: 2;
+    border: 1px solid #C94C4B;
+}
+
+#corner_circle3 {
+    box-sizing: border-box;
+    position: absolute;
+    width: 724px;
+    height: 724px;
+    left: -372.5px;
+    border-radius: 100%;
+    top: 369.5px;
+    background: #303030;
+    border: 1px solid #C94C4B;
+
+}
