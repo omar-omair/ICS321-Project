@@ -9,7 +9,6 @@ async function main() {
     let removePage = document.getElementById('remove');
     let book_page=document.getElementById('book_page');
     let average_book_page=document.getElementById('average_book_page');
-
     report.style.display = 'none';
     let admin_page = document.getElementById('admin_page');
     let booking_button = document.getElementById('booking_button');

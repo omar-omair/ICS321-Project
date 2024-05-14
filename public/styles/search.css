@@ -192,12 +192,11 @@ tr {
     padding-right: 50px;
     padding-bottom: 50px;
 }
-
+#myTicket {
+    width: 170px;
+    border-radius: 10px;
+}
 #logout img {
-    /* Add styles for the image */
     width: 50px;
-    /* Adjust size as needed */
     height: 50px;
-    /* Adjust size as needed */
-
 }

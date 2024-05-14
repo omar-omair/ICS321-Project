@@ -67,7 +67,7 @@ app.post("/login/accounts", async function (req, res) {
             }
         }
         else {
-            res.status(404).send('Not Found'); // Send 404 if user not found
+            res.status(404).send('Not Found'); 
         }
     } catch (error) {
         console.error('Error executing query:', error);
