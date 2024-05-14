@@ -1,6 +1,7 @@
 #main-flex {
     display: flex;
     flex-direction: row;
+    justify-content: center;
 }
 
 #previous {
@@ -26,24 +27,37 @@
     border-right-color: #C94C4B;
     border-top-style: hidden;
     border-bottom-style: hidden;
-    /* Adjust these values as needed */
-    flex-grow: 0;
-    /* Prevents the item from growing */
-    flex-shrink: 0;
-    /* Prevents the item from shrinking */
-    flex-basis: 500px;
-    /* Allows the item to determine its own size */
     height: 1000px;
     margin-right: 20px;
     margin-top: 10px;
-    width: 1200px;
+    width: 560px;
     max-height: 800px;
     overflow-y: auto;
     padding-bottom: 10px;
 
 }
 
-#letters {
+.rightP {
+    background-color: #121212;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 25px;
+    color: white;
+    font-weight: bold;
+    height: 100px;
+}
+
+#to,
+#from,
+#price,
+#selected_seats {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+#seats #letters {
     display: flex;
     color: white;
 }
@@ -118,4 +132,16 @@
     height: 50px;
     /* Adjust size as needed */
 
+}
+
+.bus:hover {
+    content: url("../images/blue seat.png") !important;
+}
+
+.first:hover {
+    content: url("../images/yellow seat.png") !important;
+}
+
+.disabled-hover:hover {
+    pointer-events: none !important;
 }

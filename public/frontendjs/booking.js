@@ -17,6 +17,15 @@ async function main() {
     var minDate = currentDate.toISOString().split('T')[0];
     dateInput.setAttribute("min", minDate);
 
+    var user = []
+
+    await fetch("http://localhost:3000/user").then(response => response.json()).then(data => { user = data; });
+
+    user = user[0].name
+
+    hello = document.getElementById("hello")
+    hello.innerHTML += "Hello,&nbsp" + user + "!"
+
     let originCities = [];
 
     await fetch("http://localhost:3000/origin").then(response => response.json()).then(data => { originCities = data; });
