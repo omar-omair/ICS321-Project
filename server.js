@@ -7,7 +7,22 @@ const db = require('./db.js');
 const path = require('path');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const fetch = require('node-fetch');
+
+let fetch;
+try {
+    fetch = require('node-fetch');
+} catch (err) {
+    if (err.code === 'ERR_REQUIRE_ESM') {
+        // If require() failed due to ESM, use dynamic import
+        import('node-fetch').then((module) => {
+            fetch = module.default;
+        });
+    } else {
+        // Handle other errors
+        console.error(err);
+    }
+}
+
 
 app.use(express.static("public"));
 
@@ -176,7 +191,7 @@ app.post("/payment", async function (req, res) {
         let email = req.cookies.userId;
         if (credit_number && end_date && cvv) {
             const pidResult = await db.query(`SELECT pid FROM passenger WHERE email= '${email}'`);
-            const pid_c = pidResult.rows[0].pid; 
+            const pid_c = pidResult.rows[0].pid;
             await new Promise((resolve, reject) => {
                 db.query(`INSERT INTO payment_info (pid, end_date, cvv, credit_card)
                 VALUES ('${pid_c}','${end_date}', '${cvv}', '${credit_number}');
@@ -211,27 +226,27 @@ app.post("/addedTicket", async function (req, res) {
             seat_number,
             type } = req.body;
 
+
+
         if (pid == null) {
-            const pidResult = await db.query(`SELECT pid FROM passenger WHERE email= '${email}'`);
+            let pidResult = await db.query(`SELECT pid FROM passenger WHERE email= '${email}'`);
+            console.log(seat_number)
             pid = pidResult.rows[0].pid;
         }
 
         db.query(`SELECT MAX(tid) AS max_tid FROM ticket`, (err, result) => {
             if (err) {
-                console.error('Error executing query:', err);
                 res.status(500).json({ error: 'Internal Server Error' });
                 return;
             }
             tid = result.rows[0].max_tid + 1; // Assign the incremented pid
 
-            console.log(pid);
 
             if (booking_date && weight && pid && fid && seat_number) {
-                new Promise((resolve, reject) => {
-                    db.query(`INSERT INTO ticket 
+                new Promise(async (resolve, reject) => {
+                    await db.query(`INSERT INTO ticket 
                 VALUES(${tid}, '${booking_date}', '${weight}',30,'${purchase_date}','${pid}', '${fid}', '${seat_number}','f', ${type})`, (err, result) => {
                         if (err) {
-                            console.log('Error executing query:', err);
                             reject(err);
                         } else {
                             resolve(result.rows);
@@ -239,6 +254,7 @@ app.post("/addedTicket", async function (req, res) {
                     });
                 });
                 console.log('ok');
+                console.log(seat_number + "++");
                 res.status(200).send("ok")
             } else {
                 console.log('not ok');
@@ -246,7 +262,6 @@ app.post("/addedTicket", async function (req, res) {
             }
         })
     } catch (error) {
-        console.error('Error executing query:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
@@ -530,16 +545,6 @@ app.post('/editTicket', async (req, res) => { }) // with this you can edit the s
 
 app.post('/promote', async (req, res) => {
     const { pid, fid, seat_number, type } = req.body
-    const reservedSeats = await new Promise((resolve, reject) => {
-        db.query(`SELECT `, (err, result) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(result.rows);
-            }
-        });
-    })
-
     const dateTime2 = new Date();
     const year2 = dateTime2.getFullYear();
     const month2 = dateTime2.getMonth() + 1;
@@ -572,6 +577,14 @@ app.post('/promote', async (req, res) => {
         alert(error.message);
     });
 
+    await db.query(`DELETE FROM waitList where pid='${pid}'`, (err, result) => {
+        if (err) {
+            reject(err);
+        } else {
+            resolve(result.rows);
+        }
+    });
+
 })
 
 // promote a wait lister to any available seat.
@@ -591,7 +604,7 @@ app.post('/availableSeats', async (req, res) => {
             }
         });
     });
-
+    console.log(reservedSeats)
     let totalSeats = reservedSeats[0].total_seats;
     let eco = reservedSeats[0].economy_seats;
     let bus = reservedSeats[0].business_seats;
