@@ -109,36 +109,35 @@ async function main() {
                 </tr>`
         })
 
-        let bookingButton = document.querySelector('.book_button');
+        let bookingButton = document.querySelectorAll('.book_button');
 
-        bookingButton.addEventListener('click', async function (e) {
-            e.preventDefault();
-            fid = e.target.id.split("_")[1]
-            currentFlight = fid;
-            const url = "http://localhost:3000/booking_seat"
-            await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    fid: fid,
-                })
-            }).then(response => {
-                if (response.ok) {
-                    // Redirect to booking_seat.html if the response is successful
-                    window.location.href = '/booking_seat';
-                } else {
-                    // Handle errors here, if needed
-                    console.error('Error:', response.statusText);
-                }
-            }).catch(error => {
-                console.error('Error:', error);
+        bookingButton.forEach(button => {
+            button.addEventListener('click', async function (e) {
+                e.preventDefault();
+                fid = e.target.id.split("_")[1]
+                currentFlight = fid;
+                const url = "http://localhost:3000/booking_seat"
+                await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        fid: fid,
+                    })
+                }).then(response => {
+                    if (response.ok) {
+                        // Redirect to booking_seat.html if the response is successful
+                        window.location.href = '/booking_seat';
+                    } else {
+                        // Handle errors here, if needed
+                        console.error('Error:', response.statusText);
+                    }
+                }).catch(error => {
+                    console.error('Error:', error);
+                });
             });
         });
-
-        console.log("gg")
-
 
     });
 
