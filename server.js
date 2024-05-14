@@ -67,7 +67,7 @@ app.post("/login/accounts", async function (req, res) {
             }
         }
         else {
-            res.status(404).send('Not Found'); 
+            res.status(404).send('Not Found');
         }
     } catch (error) {
         console.error('Error executing query:', error);
@@ -487,7 +487,7 @@ app.post("/allTicketsID", async function (req, res) {
 
 })
 app.post("/allTicketsIdEdit", async function (req, res) {
-    const { tid,seat_number } = req.body;
+    const { tid, seat_number } = req.body;
     if (tid) {
         try {
             const response = await new Promise((resolve, reject) => {
@@ -583,9 +583,9 @@ app.get('/bookingPercentage', async (req, res) => {
     res.json(response);
 })
 
-app.post('/cancelTicket', async (req, res) => { }) 
+app.post('/cancelTicket', async (req, res) => { })
 
-app.post('/editTicket', async (req, res) => { }) 
+app.post('/editTicket', async (req, res) => { })
 
 app.post('/promote', async (req, res) => {
     const { pid, fid, seat_number, type } = req.body
@@ -708,6 +708,23 @@ app.post('/availableSeats', async (req, res) => {
     }
     console.log(allSeats)
     res.json(allSeats);
+})
+
+app.get('/userTickets', async (req, res) => {
+    let email = req.cookies.userId
+    const tickets = await new Promise((resolve, reject) => {
+        db.query(`SELECT ti.tid, ti.seat_number, ti.seat_type from ticket ti join passenger pa on pa.pid=ti.pid where pa.email='${email}' and ti.cancelled='f'`
+            , (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result.rows);
+                }
+            });
+    });
+
+    res.json(tickets)
+
 })
 
 app.listen(PORT, () => {
