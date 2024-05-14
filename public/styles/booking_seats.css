@@ -36,6 +36,11 @@
     height: 1000px;
     margin-right: 20px;
     margin-top: 10px;
+    width: 1200px;
+    max-height: 800px;
+    overflow-y: auto;
+    padding-bottom: 10px;
+
 }
 
 #letters {
@@ -97,8 +102,9 @@
 .white_seat_img:hover {
     content: url("../images/red seat.png");
 }
-#logout{
-    width:50px;
+
+#logout {
+    width: 50px;
     border-radius: 360px;
     align-self: self-end;
     padding-right: 50px;
@@ -107,7 +113,9 @@
 
 #logout img {
     /* Add styles for the image */
-    width: 50px; /* Adjust size as needed */
-    height: 50px; /* Adjust size as needed */
-    
-  }
+    width: 50px;
+    /* Adjust size as needed */
+    height: 50px;
+    /* Adjust size as needed */
+
+}

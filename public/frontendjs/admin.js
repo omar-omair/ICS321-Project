@@ -1,13 +1,13 @@
 window.onload = main();
 async function main() {
-    let logout=document.getElementById('logout');
-    let para=document.getElementById('para')
-    let back=document.getElementById('back');
-    let report=document.getElementById('main-container');
-    let addPage=document.getElementById('add');
-    let removePage=document.getElementById('remove');
-    report.style.display='none';
-    let admin_page=document.getElementById('admin_page');
+    let logout = document.getElementById('logout');
+    let para = document.getElementById('para')
+    let back = document.getElementById('back');
+    let report = document.getElementById('main-container');
+    let addPage = document.getElementById('add');
+    let removePage = document.getElementById('remove');
+    report.style.display = 'none';
+    let admin_page = document.getElementById('admin_page');
     let booking_button = document.getElementById('booking_button');
     booking_button.addEventListener('click', async function (e) {
         e.preventDefault();
@@ -20,10 +20,10 @@ async function main() {
     let active_flight = document.getElementById('active_flight');
     active_flight.addEventListener('click', async function (e) {
         e.preventDefault();
-        admin_page.style.display='none';
-        logout.style.display='none';
-        report.style.display='block';
-        back.style.display='block';
+        admin_page.style.display = 'none';
+        logout.style.display = 'none';
+        report.style.display = 'block';
+        back.style.display = 'block';
         para.innerHTML = '';
         let flights_list = [];
 
@@ -49,24 +49,24 @@ async function main() {
         flights_list.forEach(item => {
             const currentDateTimestamp = Date.now();
             const givenDateTimestamp = Date.parse(item.f_date);
-            let result= currentDateTimestamp < givenDateTimestamp;
-            if(result){
-            const row = table.insertRow();
-            const nameCell = row.insertCell();
-            const originCell = row.insertCell();
-            const destCell = row.insertCell();
-            const timeCell = row.insertCell();
-            const dateCell = row.insertCell();
-            nameCell.textContent = item.fid;
-            originCell.textContent = item.src_city;
-            destCell.textContent = item.dest_city;
-            timeCell.textContent = item.f_time;
-            const dateTime = new Date(item.f_date);
-            const year = dateTime.getFullYear(); 
-            const month = dateTime.getMonth() + 1; 
-            const day = dateTime.getDate(); 
-            const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
-            dateCell.textContent = formattedDate;
+            let result = currentDateTimestamp < givenDateTimestamp;
+            if (result) {
+                const row = table.insertRow();
+                const nameCell = row.insertCell();
+                const originCell = row.insertCell();
+                const destCell = row.insertCell();
+                const timeCell = row.insertCell();
+                const dateCell = row.insertCell();
+                nameCell.textContent = item.fid;
+                originCell.textContent = item.src_city;
+                destCell.textContent = item.dest_city;
+                timeCell.textContent = item.f_time;
+                const dateTime = new Date(item.f_date);
+                const year = dateTime.getFullYear();
+                const month = dateTime.getMonth() + 1;
+                const day = dateTime.getDate();
+                const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+                dateCell.textContent = formattedDate;
             }
         });
         para.appendChild(table);
@@ -74,15 +74,15 @@ async function main() {
     let booking_percentage = document.getElementById('booking_percentage');
     booking_percentage.addEventListener('click', async function (e) {
         e.preventDefault();
-            window.location.href = '/report';
+        window.location.href = '/report';
     });
     let payments = document.getElementById('payments');
     payments.addEventListener('click', async function (e) {
         e.preventDefault();
-        admin_page.style.display='none';
-        logout.style.display='none';
-        report.style.display='block';
-        back.style.display='block';
+        admin_page.style.display = 'none';
+        logout.style.display = 'none';
+        report.style.display = 'block';
+        back.style.display = 'block';
         para.innerHTML = '';
         let payment_list = [];
 
@@ -108,9 +108,9 @@ async function main() {
             const priceCell = row.insertCell();
             idCell.textContent = item.tid;
             const dateTime = new Date(item.purchase_date);
-            const year = dateTime.getFullYear(); 
-            const month = dateTime.getMonth() + 1; 
-            const day = dateTime.getDate(); 
+            const year = dateTime.getFullYear();
+            const month = dateTime.getMonth() + 1;
+            const day = dateTime.getDate();
             const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
             dateCell.textContent = formattedDate;
             priceCell.textContent = item.price;
@@ -120,10 +120,10 @@ async function main() {
     let waitlist = document.getElementById('waitlist');
     waitlist.addEventListener('click', async function (e) {
         e.preventDefault();
-        admin_page.style.display='none';
-        logout.style.display='none';
-        report.style.display='block';
-        back.style.display='block';
+        admin_page.style.display = 'none';
+        logout.style.display = 'none';
+        report.style.display = 'block';
+        back.style.display = 'block';
         para.innerHTML = '';
         let wait_list = [];
 
@@ -131,7 +131,7 @@ async function main() {
         const heading = document.createElement('h1');
         heading.textContent = 'Waitlist Report:';
         para.appendChild(heading);
-         const table = document.createElement('table');
+        const table = document.createElement('table');
         table.classList.add('waitlist-table');
 
         const headerRow = table.createTHead().insertRow();
@@ -163,15 +163,15 @@ async function main() {
     let load_factor = document.getElementById('load_factor');
     load_factor.addEventListener('click', async function (e) {
         e.preventDefault();
-            window.location.href = '/report';
+        window.location.href = '/report';
     });
     let ticket_cancelled = document.getElementById('ticket_cancelled');
     ticket_cancelled.addEventListener('click', async function (e) {
         e.preventDefault();
-        admin_page.style.display='none';
-        logout.style.display='none';
-        report.style.display='block';
-        back.style.display='block';
+        admin_page.style.display = 'none';
+        logout.style.display = 'none';
+        report.style.display = 'block';
+        back.style.display = 'block';
         para.innerHTML = '';
         let tickets_list = [];
 
@@ -193,16 +193,16 @@ async function main() {
         seatNumber.textContent = 'Seat Number';
 
         tickets_list.forEach(item => {
-            if(item.cancelled){
-            const row = table.insertRow();
-            const ticket = row.insertCell();
-            const plane = row.insertCell();
-            const flight = row.insertCell();
-            const seat = row.insertCell();
-            ticket.textContent = item.tid;
-            plane.textContent = item.pid;
-            flight.textContent = item.fid;
-            seat.textContent = item.seat_number;
+            if (item.cancelled) {
+                const row = table.insertRow();
+                const ticket = row.insertCell();
+                const plane = row.insertCell();
+                const flight = row.insertCell();
+                const seat = row.insertCell();
+                ticket.textContent = item.tid;
+                plane.textContent = item.pid;
+                flight.textContent = item.fid;
+                seat.textContent = item.seat_number;
             }
         });
         para.appendChild(table);
@@ -270,18 +270,22 @@ async function main() {
     let removing_button = document.getElementById('removing_button');
     removing_button.addEventListener('click', async function (e) {
         e.preventDefault();
-        admin_page.style.display='none';
-        logout.style.display='none';
-        report.style.display='block';
-        back.style.display='block';
-        removePage.style.display='block';
-        let removed_ticket=document.getElementById('tid');
-        let tid = removed_ticket.value;
-        let remove_button = document.getElementById('remove_button');
-        remove_button.addEventListener('click', async function (e) {
-            e.preventDefault();
+        admin_page.style.display = 'none';
+        logout.style.display = 'none';
+        report.style.display = 'block';
+        back.style.display = 'block';
+        removePage.style.display = 'block';
 
-            await fetch('http://localhost:3000/allTicketsID', {
+    });
+
+    let remove_button = document.getElementById('remove_button');
+
+    remove_button.addEventListener('click', async function (e) {
+        e.preventDefault();
+        let removed_ticket = document.getElementById('tid');
+        let tid = removed_ticket.value;
+        console.log(tid)
+        await fetch('http://localhost:3000/allTicketsID', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -301,7 +305,6 @@ async function main() {
             console.error("Error deleting ticket:", error);
             alert("Failed to delete ticket!");
         });
-        
+
     });
-});
 }
