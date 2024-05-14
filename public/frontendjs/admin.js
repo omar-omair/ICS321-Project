@@ -215,6 +215,57 @@ async function main() {
         report.style.display='block';
         back.style.display='block';
         addPage.style.display='block';
+        let add_button = document.getElementById("add_ticket_button")
+        add_button.addEventListener('click',async function(e){
+            e.preventDefault()
+            let booking_date = document.getElementById('bookDate')
+            let booking_date_v = booking_date.value
+            const dateTime = new Date(booking_date_v);
+            const year = dateTime.getFullYear();
+            const month = dateTime.getMonth() + 1;
+            const day = dateTime.getDate();
+            let formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+            let purchase_date = new Date()
+            const dateTime2 = new Date(purchase_date);
+            const year2 = dateTime2.getFullYear();
+            const month2 = dateTime2.getMonth() + 1;
+            const day2 = dateTime2.getDate();
+            let formattedDate2 = `${year2}-${month2.toString().padStart(2, '0')}-${day2.toString().padStart(2, '0')}`;
+            let weight = document.getElementById('weight')
+            let pid = document.getElementById('pid')
+            let fid = document.getElementById('fid')
+            let seat_number = document.getElementById('seat_number')
+            let weight_v = weight.value
+            let pid_v = pid.value
+            let fid_v = fid.value
+            let seat_number_v = seat_number.value
+            await fetch('http://localhost:3000/addedTicket', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    booking_date: formattedDate,
+                    weight: weight_v,
+                    purchase_date:formattedDate2,
+                    pid: pid_v,
+                    fid: fid_v,
+                    seat_number: seat_number_v
+                })
+            }).then(response => {
+                if (!response.ok) {
+                    console.log("Error")
+                    throw new Error("")
+                }
+                return response.text();
+            }).then(data => {
+                console.log(data);
+                window.location.href = "/admin"
+    
+            }).catch(error => {
+                alert(error.message);
+            });
+        })
     });
     let removing_button = document.getElementById('removing_button');
     removing_button.addEventListener('click', async function (e) {

@@ -142,12 +142,8 @@ app.get("/forgetpassword", function (req, res) {
 app.post("/forgetpassword", async function (req, res) {
     try {
         const { email, password } = req.body;
-        console.log(password);
-        console.log(email);
-
         if (email && password) {
             await new Promise((resolve, reject) => {
-                console.log("gg1")
                 db.query(`UPDATE passenger SET password = '${password}' WHERE email = '${email}'`, (err, result) => {
                     if (err) {
                         reject(err);
@@ -196,6 +192,44 @@ app.post("/payment", async function (req, res) {
         } else {
             res.status(404);
         }
+    } catch (error) {
+        console.error('Error executing query:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+app.get("/addedTicket", function (req, res) {
+    res.sendFile(path.join(__dirname, 'public', 'forgetPass.html'));
+})
+app.post("/addedTicket", async function (req, res) {
+    try {
+        let tid;
+        db.query(`SELECT MAX(tid) AS max_tid FROM ticket`, (err, result) => {
+            if (err) {
+                console.error('Error executing query:', err);
+                res.status(500).json({ error: 'Internal Server Error' });
+                return;
+            }
+            tid = result.rows[0].max_tid + 1; // Assign the incremented pid
+        const { booking_date,
+                    weight,purchase_date,
+                    pid,
+                    fid,
+                seat_number} = req.body;
+        if (booking_date && weight && pid && fid && seat_number) {
+            new Promise((resolve, reject) => {
+                db.query(`INSERT INTO ticket 
+                VALUES(${tid}, '${booking_date}', '${weight}',30,'${purchase_date}','${pid}', '${fid}', '${seat_number}','f')`, (err, result) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(result.rows);
+                    }
+                });
+            });
+            res.status(200).redirect('/addedTicket');
+        } else {
+            res.status(404);
+        }})
     } catch (error) {
         console.error('Error executing query:', error);
         res.status(500).json({ error: 'Internal Server Error' });
