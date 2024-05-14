@@ -6,7 +6,7 @@ async function main() {
     let report = document.getElementById('main-container');
     let addPage = document.getElementById('add');
     let removePage = document.getElementById('remove');
-    let book_page=document.getElementById('book_page');
+    let book_page = document.getElementById('book_page');
     report.style.display = 'none';
     let admin_page = document.getElementById('admin_page');
     let booking_button = document.getElementById('booking_button');
@@ -79,14 +79,14 @@ async function main() {
         logout.style.display = 'none';
         report.style.display = 'block';
         back.style.display = 'block';
-        book_page.style.display='block';
+        book_page.style.display = 'block';
     });
-    
-    let percentage_button=document.getElementById('percentageButton')
-    percentage_button.addEventListener('click',async function(e){
+
+    let percentage_button = document.getElementById('percentageButton')
+    percentage_button.addEventListener('click', async function (e) {
         e.preventDefault();
-        let givenDate=document.getElementById('bookDate2');
-        let givenDateValue=givenDate.value;
+        let givenDate = document.getElementById('bookDate2');
+        let givenDateValue = givenDate.value;
         let booking_list = [];
         para.innerHTML = '';
 
@@ -105,16 +105,14 @@ async function main() {
             const month = dateTime.getMonth() + 1;
             const day = dateTime.getDate();
             const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
-            
+
             const dateTime2 = new Date(givenDateValue);
             const year2 = dateTime2.getFullYear();
             const month2 = dateTime2.getMonth() + 1;
             const day2 = dateTime2.getDate();
             const formattedDate2 = `${year2}-${month2.toString().padStart(2, '0')}-${day2.toString().padStart(2, '0')}`;
-            
-         
 
-            if(formattedDate === formattedDate2){
+            if (formattedDate === formattedDate2) {
                 const row = table.insertRow();
                 const idCell = row.insertCell();
                 const percentageCell = row.insertCell();
@@ -202,9 +200,7 @@ async function main() {
             promoteButton.classList.add('promote_button');
             promoteButton.addEventListener('click', async () => {
                 console.log(`Promoting ${item.name} (${item.position})`);
-
                 let availableSeats = []
-                console.log(item.fid)
                 await fetch('http://localhost:3000/availableSeats', {
                     method: 'POST',
                     headers: {
@@ -226,9 +222,8 @@ async function main() {
                     alert(error.message);
                 });
 
-
                 console.log(availableSeats)
-                selectedSeat = availableSeats[Math.floor(Math.random() * availableSeats.length)];
+                selectedSeat = Object.keys(availableSeats)[0];
                 console.log(selectedSeat);
 
                 await fetch('http://localhost:3000/promote', {
@@ -239,8 +234,8 @@ async function main() {
                     body: JSON.stringify({
                         pid: item.pid,
                         fid: item.fid,
-                        seat_number: selectedSeat.seat_number,
-                        type: selectedSeat.seat_type
+                        seat_number: selectedSeat,
+                        type: availableSeats[selectedSeat]
                     })
                 }).then(response => {
                     if (!response.ok) {
@@ -356,7 +351,7 @@ async function main() {
                     pid: pid_v,
                     fid: fid_v,
                     seat_number: seat_number_v,
-                    type : seat_type_v
+                    type: seat_type_v
                 })
             }).then(response => {
                 if (!response.ok) {

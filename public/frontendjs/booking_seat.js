@@ -219,6 +219,8 @@ async function main() {
 
             let seat_number_v = i;
 
+
+
             await fetch('http://localhost:3000/addedTicket', {
                 method: 'POST',
                 headers: {
@@ -230,7 +232,8 @@ async function main() {
                     purchase_date: formattedDate2,
                     pid: null,
                     fid: fid_v,
-                    seat_number: seat_number_v
+                    seat_number: seat_number_v,
+                    type: pickedSeats[i]
                 })
             }).then(response => {
                 if (!response.ok) {

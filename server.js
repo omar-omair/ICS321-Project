@@ -248,7 +248,7 @@ app.post("/addedTicket", async function (req, res) {
 
 app.get("/origin", async function (req, res) {
     const response = await new Promise((resolve, reject) => {
-        db.query("SELECT src_city FROM flights", (err, result) => {
+        db.query("SELECT src_city FROM flights where f_date >= CURRENT_DATE", (err, result) => {
             if (err) {
                 reject(err);
             } else {
@@ -264,7 +264,7 @@ app.post("/dest", async function (req, res) {
     let { origin } = req.body
     if (origin) {
         const response = await new Promise((resolve, reject) => {
-            db.query(`SELECT dest_city FROM flights WHERE src_city = '${origin}'`, (err, result) => {
+            db.query(`SELECT dest_city FROM flights WHERE src_city = '${origin}' and f_date >= CURRENT_DATE`, (err, result) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -337,7 +337,7 @@ app.get('/booking_seat/info', async (req, res) => {
 
 app.get("/waitlist", async function (req, res) {
     const response = await new Promise((resolve, reject) => {
-        db.query("SELECT p.name, w.position FROM passenger p JOIN waitlist w ON p.pid = w.pid", (err, result) => {
+        db.query("SELECT p.name, w.position, w.fid, w.seat_type, w.pid FROM passenger p JOIN waitlist w ON p.pid = w.pid", (err, result) => {
             if (err) {
                 reject(err);
             } else {
@@ -539,20 +539,11 @@ app.post('/editTicket', async (req, res) => { }) // with this you can edit the s
 
 app.post('/promote', async (req, res) => {
     const { pid, fid, seat_number, type } = req.body
-    const reservedSeats = await new Promise((resolve, reject) => {
-        db.query(`SELECT `, (err, result) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(result.rows);
-            }
-        });
-    })
-
     const dateTime2 = new Date();
     const year2 = dateTime2.getFullYear();
     const month2 = dateTime2.getMonth() + 1;
     const day2 = dateTime2.getDate();
+    const formattedDate2 = `${year2}-${month2.toString().padStart(2, '0')}-${day2.toString().padStart(2, '0')}`;
 
     await fetch('http://localhost:3000/addedTicket', {
         method: 'POST',
@@ -581,6 +572,8 @@ app.post('/promote', async (req, res) => {
         alert(error.message);
     });
 
+    await db.query(`DELETE FROM waitlist WHERE pid = '${pid}'`)
+
 })
 
 // promote a wait lister to any available seat.
@@ -601,11 +594,28 @@ app.post('/availableSeats', async (req, res) => {
         });
     });
 
-    let totalSeats = reservedSeats[0].total_seats;
-    let eco = reservedSeats[0].economy_seats;
-    let bus = reservedSeats[0].business_seats;
-    let first = reservedSeats[0].first_seats;
 
+    const allSeatsT = await new Promise((resolve, reject) => {
+        db.query(`SELECT pl.total_seats, air.economy_seats, air.first_seats, air.business_seats
+                from flights fl
+                join plane pl on fl.plane_id = pl.plane_id
+                join aircraft air on pl.aircraft_type = air.aircraft_type
+                where fl.fid='${fid}'`, (err, result) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(result.rows);
+            }
+        });
+    });
+
+    totalSeats = allSeatsT[0]["total_seats"]
+    eco = allSeatsT[0]["economy_seats"]
+    bus = allSeatsT[0]["business_seats"]
+    first = allSeatsT[0]["first_seats"]
+
+
+    console.log(totalSeats);
     allSeats = {}
     for (let i = 1; i <= Math.floor(totalSeats / 6); i++) {
         if (i <= Math.floor(eco / 6)) {
@@ -635,13 +645,18 @@ app.post('/availableSeats', async (req, res) => {
         }
     }
 
-    for (i = 0; i < reservedSeats.length; i++) {
-        if (allSeats[reservedSeats[i].seat_number] !== undefined) {
-            delete allSeats[reservedSeats[i].seat_number]
+    if (reservedSeats.length > 0) {
+        let eco = reservedSeats[0].economy_seats;
+        let bus = reservedSeats[0].business_seats;
+        let first = reservedSeats[0].first_seats;
+
+        for (i = 0; i < reservedSeats.length; i++) {
+            if (allSeats[reservedSeats[i].seat_number] !== undefined) {
+                delete allSeats[reservedSeats[i].seat_number]
+            }
         }
     }
-
-
+    console.log(allSeats)
     res.json(allSeats);
 })
 
