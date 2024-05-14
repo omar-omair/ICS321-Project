@@ -21,8 +21,7 @@ function main() {
             })
         }).then(response => {
             if (!response.ok) {
-                console.log("emaiiaiaialk not fdound error")
-                throw new Error("")
+
             }
             return response.text();
         }).then(data => {
@@ -37,7 +36,7 @@ function main() {
             }
 
         }).catch(error => {
-            alert(error.message);
+            alert("Email and/or Password are not valid");
         });
 
     })

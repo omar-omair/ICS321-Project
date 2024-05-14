@@ -58,30 +58,30 @@ async function main() {
             promoteButton.textContent = 'Cancel';
             promoteButton.classList.add('promote_button');
             promoteButton.addEventListener('click', async () => {
-            await fetch('http://localhost:3000/cancelUserTicket', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ tid: item.tid})
-        }).then(response => {
-            if (response.ok) {
-                alert("Ticket successfully Cancelled!");
-                location.reload();
-            } else {
-                alert("Failed to cancel ticket!");
-            }
-        }).catch(error => {
-            console.error("Error cancelling ticket:", error);
-            alert("Failed to cancel ticket!");
-        });
+                await fetch('http://localhost:3000/cancelUserTicket', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ tid: item.tid })
+                }).then(response => {
+                    if (response.ok) {
+                        alert("Ticket successfully Cancelled!");
+                        location.reload();
+                    } else {
+                        alert("Failed to cancel ticket!");
+                    }
+                }).catch(error => {
+                    console.error("Error cancelling ticket:", error);
+                    alert("Failed to cancel ticket!");
+                });
 
-        });
+            });
             canc.appendChild(promoteButton);
 
             para.appendChild(table);
 
-    });
+        });
 
-})
+    })
 }
