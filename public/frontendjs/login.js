@@ -33,7 +33,7 @@ function main() {
             }
             else if (data == "a") {
                 console.log(data)
-                window.location.href = "/admin"
+                window.location.href = "/UI"
             }
 
         }).catch(error => {

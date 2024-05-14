@@ -7,8 +7,8 @@ async function main() {
     let addPage = document.getElementById('add');
     let editPage = document.getElementById('edit');
     let removePage = document.getElementById('remove');
-    let book_page = document.getElementById('book_page');
-    let average_book_page = document.getElementById('average_book_page');
+    let book_page=document.getElementById('book_page');
+    let average_book_page=document.getElementById('average_book_page');
     report.style.display = 'none';
     let admin_page = document.getElementById('admin_page');
     let booking_button = document.getElementById('booking_button');
@@ -81,14 +81,14 @@ async function main() {
         logout.style.display = 'none';
         report.style.display = 'block';
         back.style.display = 'block';
-        book_page.style.display = 'block';
+        book_page.style.display='block';
     });
-
-    let percentage_button = document.getElementById('percentageButton')
-    percentage_button.addEventListener('click', async function (e) {
+    
+    let percentage_button=document.getElementById('percentageButton')
+    percentage_button.addEventListener('click',async function(e){
         e.preventDefault();
-        let givenDate = document.getElementById('bookDate2');
-        let givenDateValue = givenDate.value;
+        let givenDate=document.getElementById('bookDate2');
+        let givenDateValue=givenDate.value;
         let booking_list = [];
         para.innerHTML = '';
 
@@ -107,19 +107,21 @@ async function main() {
             const month = dateTime.getMonth() + 1;
             const day = dateTime.getDate();
             const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
-
+            
             const dateTime2 = new Date(givenDateValue);
             const year2 = dateTime2.getFullYear();
             const month2 = dateTime2.getMonth() + 1;
             const day2 = dateTime2.getDate();
             const formattedDate2 = `${year2}-${month2.toString().padStart(2, '0')}-${day2.toString().padStart(2, '0')}`;
+            
+         
 
-            if (formattedDate === formattedDate2) {
+            if(formattedDate === formattedDate2){
                 const row = table.insertRow();
                 const idCell = row.insertCell();
                 const percentageCell = row.insertCell();
                 idCell.textContent = item.fid;
-                percentageCell.textContent = item.booking_percentage + "%";
+                percentageCell.textContent = item.booking_percentage+"%";
             }
         });
         para.appendChild(table);
@@ -202,7 +204,9 @@ async function main() {
             promoteButton.classList.add('promote_button');
             promoteButton.addEventListener('click', async () => {
                 console.log(`Promoting ${item.name} (${item.position})`);
+
                 let availableSeats = []
+                console.log(item.fid)
                 await fetch('http://localhost:3000/availableSeats', {
                     method: 'POST',
                     headers: {
@@ -224,8 +228,9 @@ async function main() {
                     alert(error.message);
                 });
 
+
                 console.log(availableSeats)
-                selectedSeat = Object.keys(availableSeats)[0];
+                selectedSeat = availableSeats[Math.floor(Math.random() * availableSeats.length)];
                 console.log(selectedSeat);
 
                 await fetch('http://localhost:3000/promote', {
@@ -236,8 +241,8 @@ async function main() {
                     body: JSON.stringify({
                         pid: item.pid,
                         fid: item.fid,
-                        seat_number: selectedSeat,
-                        type: availableSeats[selectedSeat]
+                        seat_number: selectedSeat.seat_number,
+                        type: selectedSeat.seat_type
                     })
                 }).then(response => {
                     if (!response.ok) {
@@ -267,16 +272,16 @@ async function main() {
         logout.style.display = 'none';
         report.style.display = 'block';
         back.style.display = 'block';
-        average_book_page.style.display = 'block';
+        average_book_page.style.display='block'; 
     });
-    let averageButton = document.getElementById('averageButton')
-    averageButton.addEventListener('click', async function (e) {
+    let averageButton=document.getElementById('averageButton')
+    averageButton.addEventListener('click',async function(e){
         e.preventDefault();
-        let givenDate = document.getElementById('bookDate3');
-        let givenDateValue = givenDate.value;
+        let givenDate=document.getElementById('bookDate3');
+        let givenDateValue=givenDate.value;
         let booking_list = [];
         para.innerHTML = '';
-        let averageNum = 0;
+        let averageNum=0;
         await fetch("http://localhost:3000/bookingPercentage").then(response => response.json()).then(data => { booking_list = data; });
         const table = document.createElement('table');
         table.classList.add('activeFlights-table');
@@ -291,26 +296,26 @@ async function main() {
         const month2 = dateTime2.getMonth() + 1;
         const day2 = dateTime2.getDate();
         const formattedDate2 = `${year2}-${month2.toString().padStart(2, '0')}-${day2.toString().padStart(2, '0')}`;
-
+        
         booking_list.forEach(item => {
             const dateTime = new Date(item.f_date);
             const year = dateTime.getFullYear();
             const month = dateTime.getMonth() + 1;
             const day = dateTime.getDate();
             const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+            
 
-
-            if (formattedDate === formattedDate2) {
+            if(formattedDate === formattedDate2){
                 const bookingPercentage = parseFloat(item.booking_percentage);
-                averageNum += bookingPercentage;
+                averageNum+=bookingPercentage;  
             }
         });
-        if (averageNum >= 0) {
+        if(averageNum >= 0){
             const row = table.insertRow();
             const idCell = row.insertCell();
             const percentageCell = row.insertCell();
             idCell.textContent = formattedDate2;
-            percentageCell.textContent = averageNum / 2 + "%";
+            percentageCell.textContent = averageNum/2+"%";
         }
         para.appendChild(table);
     });
@@ -402,7 +407,7 @@ async function main() {
                     pid: pid_v,
                     fid: fid_v,
                     seat_number: seat_number_v,
-                    type: seat_type_v
+                    type : seat_type_v
                 })
             }).then(response => {
                 if (!response.ok) {
@@ -483,11 +488,11 @@ async function main() {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ tid: tid, seat_number: seat })
+            body: JSON.stringify({ tid: tid,seat_number:seat }) 
         }).then(response => {
             if (response.ok) {
                 alert("Ticket successfully edited!");
-                location.reload();
+                location.reload(); 
             } else {
                 alert("Failed to edit ticket!");
             }

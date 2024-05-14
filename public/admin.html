@@ -38,6 +38,7 @@
                     <button class="admin_buttons" id="removing_button">Remove Ticket</button>
                 </div>
                 <div>
+                    <button class="admin_buttons" id="edit_button">Edit Ticket</button>
                     <button class="admin_buttons" id="booking_button" style="background-color: antiquewhite; color: #C94C4B;">Book a Flight !</button>
                 </div>
             </div>
@@ -72,6 +73,21 @@
                     <div>
                         <input type="date" id="bookDate2" placeholder="Booking Date" style="margin-left: 23%;" required>
                         <button style="border-radius: 30px; width: 180px; margin-left: 34%;" id ="percentageButton">Generate Report</button>
+                    </div>
+                </div>
+                <div id="average_book_page">
+                    <h1>Enter Date of Flights Needed:<h1></h1>
+                    <div>
+                        <input type="date" id="bookDate3" placeholder="Booking Date" style="margin-left: 23%;" required>
+                        <button style="border-radius: 30px; width: 180px; margin-left: 34%;" id ="averageButton">Generate Report</button>
+                    </div>
+                </div>
+                <div id="edit">
+                    <h1>Enter Ticket ID to Edit it's Seat Number:<h1>
+                    <div id="edit-content">
+                        <input type="text" id="tid5" placeholder="Ticket ID"  required>
+                        <input type="text" id="seat" placeholder="New Seat Number"  required>
+                        <button style="border-radius: 30px; width: 180px; margin-left: 15%;" id="editbutton">Edit Ticket</button>
                     </div>
                 </div>
             </div>
