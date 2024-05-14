@@ -5,6 +5,7 @@ async function main() {
     let back = document.getElementById('back');
     let report = document.getElementById('main-container');
     let addPage = document.getElementById('add');
+    let editPage = document.getElementById('edit');
     let removePage = document.getElementById('remove');
     let book_page=document.getElementById('book_page');
     let average_book_page=document.getElementById('average_book_page');
@@ -465,7 +466,43 @@ async function main() {
         });
 
     });
+    let editing_button = document.getElementById('edit_button');
+    editing_button.addEventListener('click', async function (e) {
+        e.preventDefault();
+        admin_page.style.display = 'none';
+        logout.style.display = 'none';
+        report.style.display = 'block';
+        back.style.display = 'block';
+        editPage.style.display = 'block';
 
+    });
+
+    let editbutton = document.getElementById('editbutton');
+    editbutton.addEventListener('click', async function (e) {
+        e.preventDefault();
+        let edited_ticket = document.getElementById('tid5');
+        let tid = edited_ticket.value;
+        let newSeat = document.getElementById('seat');
+        let seat = newSeat.value;
+        await fetch('http://localhost:3000/allTicketsIdEdit', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ tid: tid,seat_number:seat }) 
+        }).then(response => {
+            if (response.ok) {
+                alert("Ticket successfully edited!");
+                location.reload(); 
+            } else {
+                alert("Failed to edit ticket!");
+            }
+        }).catch(error => {
+            console.error("Error editing ticket:", error);
+            alert("Failed to edit ticket!");
+        });
+
+    });
 
 
 }

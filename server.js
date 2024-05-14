@@ -485,7 +485,56 @@ app.post("/allTicketsID", async function (req, res) {
     }
 
 })
+app.post("/allTicketsIdEdit", async function (req, res) {
+    const { tid,seat_number } = req.body;
+    if (tid) {
+        try {
+            const response = await new Promise((resolve, reject) => {
+                db.query(`SELECT tid from ticket where tid = ${tid}`, (err, result) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(result.rows);
+                    }
 
+                });
+            });
+
+            if (response.length > 0) {
+                await new Promise((resolve, reject) => {
+                    db.query(`UPDATE ticket set seat_number='${seat_number}' WHERE tid = ${tid}`, (err, result) => {
+                        if (err) {
+                            reject(err);
+                        } else {
+                            resolve(result.rows);
+                        }
+                    });
+                });
+
+
+
+
+                res.status(200).send("Ticket successfully deleted!");
+            }
+            else {
+                console.error("Error deleting ticket:", error);
+                res.status(500).send("Internal Server Error");
+            }
+        }
+
+        catch (error) {
+            console.error("Error deleting ticket:", error);
+            res.status(500).send("Internal Server Error");
+        }
+
+
+    }
+
+    else {
+        res.status(400).send("Ticket ID (tid) is required");
+    }
+
+})
 app.post('/tickets', async (req, res) => {
     const { fid } = req.body
     const response2 = await new Promise((resolve, reject) => {
@@ -533,9 +582,9 @@ app.get('/bookingPercentage', async (req, res) => {
     res.json(response);
 })
 
-app.post('/cancelTicket', async (req, res) => { }) //cancels a ticket from the list of tickets
+app.post('/cancelTicket', async (req, res) => { }) 
 
-app.post('/editTicket', async (req, res) => { }) // with this you can edit the seat of the ticket to any other available seat with the same seat type.
+app.post('/editTicket', async (req, res) => { }) 
 
 app.post('/promote', async (req, res) => {
     const { pid, fid, seat_number, type } = req.body
