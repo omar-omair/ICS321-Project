@@ -219,3 +219,13 @@ input[type="date"] {
 #book_page * {
     margin-top: 30px;
 }
+#average_book_page{
+    display: none;
+    justify-content: center;
+    align-items: center;
+    margin-left: 1px;
+}
+
+#average_book_page * {
+    margin-top: 30px;
+}
