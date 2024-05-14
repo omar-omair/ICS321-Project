@@ -175,9 +175,8 @@ app.post("/payment", async function (req, res) {
         const { credit_number, holder_name, end_date, cvv } = req.body;
         let email = req.cookies.userId;
         if (credit_number && end_date && cvv) {
-            // Await the resolution of the query
             const pidResult = await db.query(`SELECT pid FROM passenger WHERE email= '${email}'`);
-            const pid_c = pidResult.rows[0].pid; // Extract the PID from the query result
+            const pid_c = pidResult.rows[0].pid; 
             await new Promise((resolve, reject) => {
                 db.query(`INSERT INTO payment_info (pid, end_date, cvv, credit_card)
                 VALUES ('${pid_c}','${end_date}', '${cvv}', '${credit_number}');
@@ -408,17 +407,8 @@ app.get("/cancelledTickets", async function (req, res) {
     res.json(response);
 })
 app.get("/payments", async function (req, res) {
-    const response1 = await new Promise((resolve, reject) => {
-        db.query("SELECT ti.tid, se.seat_type from seat se join ticket ti on ti.seat_number = se.seat_number where ti.cancelled = 'f'", (err, result) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(result.rows);
-            }
-        });
-    });
     const response2 = await new Promise((resolve, reject) => {
-        db.query("SELECT ti.tid, ti.purchase_date, air.business_price, air.first_price, air.economy_price from ticket ti join flights fl on ti.fid = fl.fid join plane pl on pl.plane_id = fl.plane_id join aircraft air on pl.aircraft_type = air.aircraft_type where ti.cancelled = 'f'", (err, result) => {
+        db.query("SELECT ti.tid, ti.seat_type, ti.purchase_date, air.business_price, air.first_price, air.economy_price from ticket ti join flights fl on ti.fid = fl.fid join plane pl on pl.plane_id = fl.plane_id join aircraft air on pl.aircraft_type = air.aircraft_type where ti.cancelled = 'f'", (err, result) => {
             if (err) {
                 reject(err);
             } else {
@@ -430,13 +420,10 @@ app.get("/payments", async function (req, res) {
     response2.forEach(element2 => {
         let price = null;
 
-        const matchedElement = response1.find(element1 => {
-            return element1.tid === element2.tid;
-        });
 
-        if (matchedElement.seat_type === 'Business Class') {
+        if (element2.seat_type === 'Business Class') {
             price = element2.business_price;
-        } else if (matchedElement.seat_type === 'Economy Class') {
+        } else if (element2.seat_type === 'Economy Class') {
             price = element2.economy_price;
         } else {
             price = element2.first_price;
