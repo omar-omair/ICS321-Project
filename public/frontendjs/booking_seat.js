@@ -200,6 +200,8 @@ async function main() {
         let formattedDate2 = `${year2}-${month2.toString().padStart(2, '0')}-${day2.toString().padStart(2, '0')}`;
 
         for (i in pickedSeats) {
+            console.log(i);
+
             let weight_v = "0";
 
             if (pickedSeats[i] == "eco") {
@@ -237,11 +239,11 @@ async function main() {
                 }
                 return response.text();
             }).then(data => {
-                console.log(data);
 
             }).catch(error => {
                 alert(error.message);
             });
+
         }
 
         window.location.href = "/payment"

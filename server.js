@@ -175,7 +175,7 @@ app.post("/payment", async function (req, res) {
         let email = req.cookies.userId;
         if (credit_number && end_date && cvv) {
             const pidResult = await db.query(`SELECT pid FROM passenger WHERE email= '${email}'`);
-            const pid_c = pidResult.rows[0].pid; 
+            const pid_c = pidResult.rows[0].pid;
             await new Promise((resolve, reject) => {
                 db.query(`INSERT INTO payment_info (pid, end_date, cvv, credit_card)
                 VALUES ('${pid_c}','${end_date}', '${cvv}', '${credit_number}');
@@ -204,7 +204,7 @@ app.post("/addedTicket", async function (req, res) {
         let tid;
         let email = req.cookies.userId;
         let { booking_date,
-            weight, 
+            weight,
             purchase_date,
             pid,
             fid,
@@ -225,7 +225,7 @@ app.post("/addedTicket", async function (req, res) {
             tid = result.rows[0].max_tid + 1; // Assign the incremented pid
             if (booking_date && weight && pid && fid && seat_number) {
                 new Promise((resolve, reject) => {
-                db.query(`INSERT INTO ticket 
+                    db.query(`INSERT INTO ticket 
                 VALUES(${tid}, '${booking_date}', '${weight}',30,'${purchase_date}','${pid}', '${fid}', '${seat_number}','f', '${type}')`, (err, result) => {
                         if (err) {
                             console.log('Error executing query:', err);

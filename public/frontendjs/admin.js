@@ -202,13 +202,68 @@ async function main() {
             const promoteButton = document.createElement('button');
             promoteButton.textContent = 'Promote';
             promoteButton.classList.add('promote_button');
-            promoteButton.addEventListener('click', () => {
+            promoteButton.addEventListener('click', async () => {
                 console.log(`Promoting ${item.name} (${item.position})`);
-            });
 
+                let availableSeats = []
+                console.log(item.fid)
+                await fetch('http://localhost:3000/availableSeats', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        fid: item.fid
+                    })
+                }).then(response => {
+                    if (!response.ok) {
+                        console.log("Error")
+                        throw new Error("")
+                    }
+                    return response.json();
+                }).then(data => {
+                    availableSeats = data
+
+                }).catch(error => {
+                    alert(error.message);
+                });
+
+
+                console.log(availableSeats)
+                selectedSeat = availableSeats[Math.floor(Math.random() * availableSeats.length)];
+                console.log(selectedSeat);
+
+                await fetch('http://localhost:3000/promote', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        pid: item.pid,
+                        fid: item.fid,
+                        seat_number: selectedSeat.seat_number,
+                        type: selectedSeat.seat_type
+                    })
+                }).then(response => {
+                    if (!response.ok) {
+                        console.log("Error")
+                        throw new Error("")
+                    }
+                    return response.text();
+                }).then(data => {
+                    console.log(data);
+                    window.location.reload();
+
+                }).catch(error => {
+                    alert(error.message);
+                });
+
+            })
             promoteCell.appendChild(promoteButton);
+
+            para.appendChild(table);
+
         });
-        para.appendChild(table);
     });
     let load_factor = document.getElementById('load_factor');
     load_factor.addEventListener('click', async function (e) {
@@ -410,6 +465,7 @@ async function main() {
         });
 
     });
+
 
 
 }
