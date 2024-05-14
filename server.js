@@ -204,7 +204,8 @@ app.post("/addedTicket", async function (req, res) {
         let tid;
         let email = req.cookies.userId;
         let { booking_date,
-            weight, purchase_date,
+            weight, 
+            purchase_date,
             pid,
             fid,
             seat_number,
@@ -222,13 +223,10 @@ app.post("/addedTicket", async function (req, res) {
                 return;
             }
             tid = result.rows[0].max_tid + 1; // Assign the incremented pid
-
-            console.log(pid);
-
             if (booking_date && weight && pid && fid && seat_number) {
                 new Promise((resolve, reject) => {
-                    db.query(`INSERT INTO ticket 
-                VALUES(${tid}, '${booking_date}', '${weight}',30,'${purchase_date}','${pid}', '${fid}', '${seat_number}','f', ${type})`, (err, result) => {
+                db.query(`INSERT INTO ticket 
+                VALUES(${tid}, '${booking_date}', '${weight}',30,'${purchase_date}','${pid}', '${fid}', '${seat_number}','f', '${type}')`, (err, result) => {
                         if (err) {
                             console.log('Error executing query:', err);
                             reject(err);
@@ -237,10 +235,8 @@ app.post("/addedTicket", async function (req, res) {
                         }
                     });
                 });
-                console.log('ok');
                 res.status(200).send("ok")
             } else {
-                console.log('not ok');
                 res.status(404).send("not ok");
             }
         })
