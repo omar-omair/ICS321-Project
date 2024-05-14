@@ -506,7 +506,7 @@ app.post("/allTicketsID", async function (req, res) {
 app.post('/tickets', async (req, res) => {
     const { fid } = req.body
     const response2 = await new Promise((resolve, reject) => {
-        db.query(`SELECT seat_number from ticket where fid='${fid}'`, (err, result) => {
+        db.query(`SELECT seat_number from ticket where fid='${fid}' and cancelled = 'f'`, (err, result) => {
             if (err) {
                 reject(err);
             } else {
@@ -534,6 +534,13 @@ app.get('/user', async (req, res) => {
     });
     res.json(response);
 })
+
+
+app.post('/cancelTicket', async (req, res) => { }) //cancels a ticket from the list of tickets
+
+app.post('/editTicket', async (req, res) => { }) // with this you can edit the seat of the ticket to any other available seat with the same seat type.
+
+app.post('/promote', async (req, res) => { }) // promote a wait lister to any available seat.
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
