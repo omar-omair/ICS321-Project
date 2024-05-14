@@ -521,7 +521,21 @@ app.get('/user', async (req, res) => {
     });
     res.json(response);
 })
+app.get('/bookingPercentage', async (req, res) => {
+    response = await await new Promise((resolve, reject) => {
+        db.query("SELECT f.fid,ROUND((COUNT(t.tid) * 100.0 / p.total_seats), 2),f.f_date AS booking_percentage FROM flights f LEFT JOIN ticket t ON f.fid = t.fid LEFT JOIN plane p ON f.plane_id = p.plane_id GROUP BY f.fid, p.total_seats", (err, result) => {
+            if (err) {
+                reject(err);
+            }
+            else {
+                resolve(result.rows);
+            }
 
+        });
+
+    });
+    res.json(response);
+})
 
 app.post('/cancelTicket', async (req, res) => { }) //cancels a ticket from the list of tickets
 
