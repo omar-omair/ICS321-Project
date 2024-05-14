@@ -71,12 +71,12 @@ async function main() {
                     <img src = "images/seat.png" alt="seat" id="${i}F" class="white_seat_img eco">
                     <div style="margin-left: 25px; font-size:25px; color:#f30606; font-weight:bold;">${i}</div>
                 </div>`
-            allSeats[`${i}A`] = 'eco'
-            allSeats[`${i}B`] = 'eco'
-            allSeats[`${i}C`] = 'eco'
-            allSeats[`${i}D`] = 'eco'
-            allSeats[`${i}E`] = 'eco'
-            allSeats[`${i}F`] = 'eco'
+            allSeats[`${i}A`] = 'Economy'
+            allSeats[`${i}B`] = 'Economy'
+            allSeats[`${i}C`] = 'Economy'
+            allSeats[`${i}D`] = 'Economy'
+            allSeats[`${i}E`] = 'Economy'
+            allSeats[`${i}F`] = 'Economy'
 
         }
         else if (i <= Math.floor((flight_info.economy_seats + flight_info.business_seats) / 6)) {
@@ -90,12 +90,12 @@ async function main() {
                     <img src = "images/seat.png" alt="seat" id="${i}F" class="white_seat_img bus">
                     <div style="margin-left: 25px; font-size:25px; color:#353ff2; font-weight:bold;">${i}</div>
                 </div>`
-            allSeats[`${i}A`] = 'bus'
-            allSeats[`${i}B`] = 'bus'
-            allSeats[`${i}C`] = 'bus'
-            allSeats[`${i}D`] = 'bus'
-            allSeats[`${i}E`] = 'bus'
-            allSeats[`${i}F`] = 'bus'
+            allSeats[`${i}A`] = 'Business'
+            allSeats[`${i}B`] = 'Business'
+            allSeats[`${i}C`] = 'Business'
+            allSeats[`${i}D`] = 'Business'
+            allSeats[`${i}E`] = 'Business'
+            allSeats[`${i}F`] = 'Business'
         }
         else if (i <= Math.floor((flight_info.economy_seats + flight_info.business_seats + flight_info.first_seats) / 6)) {
             seatArea.innerHTML += `<div class="seat_row">
@@ -108,12 +108,12 @@ async function main() {
                     <img src = "images/seat.png" alt="seat" id="${i}F" class="white_seat_img first">
                     <div style="margin-left: 25px; font-size:25px; color:#FDD017; font-weight:bold;">${i}</div>
                 </div>`
-            allSeats[`${i}A`] = 'f'
-            allSeats[`${i}B`] = 'f'
-            allSeats[`${i}C`] = 'f'
-            allSeats[`${i}D`] = 'f'
-            allSeats[`${i}E`] = 'f'
-            allSeats[`${i}F`] = 'f'
+            allSeats[`${i}A`] = 'First'
+            allSeats[`${i}B`] = 'First'
+            allSeats[`${i}C`] = 'First'
+            allSeats[`${i}D`] = 'First'
+            allSeats[`${i}E`] = 'First'
+            allSeats[`${i}F`] = 'First'
         }
     }
 
@@ -146,10 +146,10 @@ async function main() {
                     pickedSeats[id] = allSeats[id]
                     addPrice(id)
 
-                    if (pickedSeats[id] == "eco") {
+                    if (pickedSeats[id] == "Economy") {
                         color = "red"
                     }
-                    else if (pickedSeats[id] == "bus") {
+                    else if (pickedSeats[id] == "Business") {
                         color = "blue"
                     }
                     else {
@@ -166,10 +166,10 @@ async function main() {
                 selected_seatsP.innerHTML = ""
                 for (i in pickedSeats) {
                     color = ""
-                    if (pickedSeats[i] == "eco") {
+                    if (pickedSeats[i] == "Economy") {
                         color = "#f30606"
                     }
-                    else if (pickedSeats[i] == "bus") {
+                    else if (pickedSeats[i] == "Business") {
                         color = "#353ff2"
                     }
                     else {
@@ -204,10 +204,10 @@ async function main() {
 
             let weight_v = "0";
 
-            if (pickedSeats[i] == "eco") {
+            if (pickedSeats[i] == "Economy") {
                 weight_v = "30";
             }
-            else if (pickedSeats[i] == "bus") {
+            else if (pickedSeats[i] == "Business") {
                 weight_v = "70";
             }
             else {
@@ -271,10 +271,10 @@ async function main() {
 
     function removePrice(seat) {
         let type = allSeats[seat]
-        if (type == "eco") {
+        if (type == "Economy") {
             totalPrice -= parseInt(flight_info.economy_price);
         }
-        else if (type == "bus") {
+        else if (type == "Business") {
             totalPrice -= parseInt(flight_info.business_price);
         }
         else {
@@ -286,10 +286,10 @@ async function main() {
 
     function addPrice(seat) {
         let type = allSeats[seat]
-        if (type == "eco") {
+        if (type == "Economy") {
             totalPrice += parseInt(flight_info.economy_price);
         }
-        else if (type == "bus") {
+        else if (type == "Business") {
             totalPrice += parseInt(flight_info.business_price);
         }
         else {

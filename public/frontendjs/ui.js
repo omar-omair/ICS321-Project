@@ -38,20 +38,50 @@ async function main() {
         const nameHeader = headerRow.insertCell();
         const originHeader = headerRow.insertCell();
         const destHeader = headerRow.insertCell();
+        const canceltick = headerRow.insertCell();
         nameHeader.textContent = 'Ticket ID';
         originHeader.textContent = 'Seat Number';
         destHeader.textContent = 'Seat Type';
+        canceltick.textContent = 'Cancel Ticket';
+
+
         tickets.forEach(item => {
             const row = table.insertRow();
             const nameCell = row.insertCell();
             const originCell = row.insertCell();
             const destCell = row.insertCell();
+            const canc = row.insertCell();
             nameCell.textContent = item.tid;
             originCell.textContent = item.seat_number;
             destCell.textContent = item.seat_type;
+            const promoteButton = document.createElement('button');
+            promoteButton.textContent = 'Cancel';
+            promoteButton.classList.add('promote_button');
+            promoteButton.addEventListener('click', async () => {
+            await fetch('http://localhost:3000/cancelUserTicket', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ tid: item.tid})
+        }).then(response => {
+            if (response.ok) {
+                alert("Ticket successfully Cancelled!");
+                location.reload();
+            } else {
+                alert("Failed to cancel ticket!");
+            }
+        }).catch(error => {
+            console.error("Error cancelling ticket:", error);
+            alert("Failed to cancel ticket!");
         });
-        para.appendChild(table);
 
-    })
+        });
+            canc.appendChild(promoteButton);
 
+            para.appendChild(table);
+
+    });
+
+})
 }

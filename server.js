@@ -417,9 +417,9 @@ app.get("/payments", async function (req, res) {
         let price = null;
 
 
-        if (element2.seat_type === 'Business Class') {
+        if (element2.seat_type === 'Business') {
             price = element2.business_price;
-        } else if (element2.seat_type === 'Economy Class') {
+        } else if (element2.seat_type === 'Economy') {
             price = element2.economy_price;
         } else {
             price = element2.first_price;
@@ -669,29 +669,29 @@ app.post('/availableSeats', async (req, res) => {
     allSeats = {}
     for (let i = 1; i <= Math.floor(totalSeats / 6); i++) {
         if (i <= Math.floor(eco / 6)) {
-            allSeats[`${i}A`] = 'eco'
-            allSeats[`${i}B`] = 'eco'
-            allSeats[`${i}C`] = 'eco'
-            allSeats[`${i}D`] = 'eco'
-            allSeats[`${i}E`] = 'eco'
-            allSeats[`${i}F`] = 'eco'
+            allSeats[`${i}A`] = 'Economy'
+            allSeats[`${i}B`] = 'Economy'
+            allSeats[`${i}C`] = 'Economy'
+            allSeats[`${i}D`] = 'Economy'
+            allSeats[`${i}E`] = 'Economy'
+            allSeats[`${i}F`] = 'Economy'
 
         }
         else if (i <= Math.floor((eco + bus) / 6)) {
-            allSeats[`${i}A`] = 'bus'
-            allSeats[`${i}B`] = 'bus'
-            allSeats[`${i}C`] = 'bus'
-            allSeats[`${i}D`] = 'bus'
-            allSeats[`${i}E`] = 'bus'
-            allSeats[`${i}F`] = 'bus'
+            allSeats[`${i}A`] = 'Business'
+            allSeats[`${i}B`] = 'Business'
+            allSeats[`${i}C`] = 'Business'
+            allSeats[`${i}D`] = 'Business'
+            allSeats[`${i}E`] = 'Business'
+            allSeats[`${i}F`] = 'Business'
         }
         else if (i <= Math.floor((eco + bus + first) / 6)) {
-            allSeats[`${i}A`] = 'f'
-            allSeats[`${i}B`] = 'f'
-            allSeats[`${i}C`] = 'f'
-            allSeats[`${i}D`] = 'f'
-            allSeats[`${i}E`] = 'f'
-            allSeats[`${i}F`] = 'f'
+            allSeats[`${i}A`] = 'First'
+            allSeats[`${i}B`] = 'First'
+            allSeats[`${i}C`] = 'First'
+            allSeats[`${i}D`] = 'First'
+            allSeats[`${i}E`] = 'First'
+            allSeats[`${i}F`] = 'First'
         }
     }
 
@@ -726,7 +726,56 @@ app.get('/userTickets', async (req, res) => {
     res.json(tickets)
 
 })
+app.post("/cancelUserTicket", async function (req, res) {
+    const { tid } = req.body;
+    if (tid) {
+        try {
+            const response = await new Promise((resolve, reject) => {
+                db.query(`SELECT tid from ticket where tid = ${tid}`, (err, result) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(result.rows);
+                    }
 
+                });
+            });
+
+            if (response.length > 0) {
+                await new Promise((resolve, reject) => {
+                    db.query(`UPDATE ticket set cancelled='true' WHERE tid = ${tid}`, (err, result) => {
+                        if (err) {
+                            reject(err);
+                        } else {
+                            resolve(result.rows);
+                        }
+                    });
+                });
+
+
+
+
+                res.status(200).send("Ticket successfully cancelled!");
+            }
+            else {
+                console.error("Error cancelling ticket:", error);
+                res.status(500).send("Internal Server Error");
+            }
+        }
+
+        catch (error) {
+            console.error("Error cancelling ticket:", error);
+            res.status(500).send("Internal Server Error");
+        }
+
+
+    }
+
+    else {
+        res.status(400).send("Ticket ID (tid) is required");
+    }
+
+})
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
