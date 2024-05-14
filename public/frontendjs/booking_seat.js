@@ -25,88 +25,86 @@ async function main() {
         alert(error.message);
     });
 
-    let allSeats = []
-    let pickedSeats = []
+    let allSeats = {}
+    let pickedSeats = {}
     let reservedSeats = []
     let totalPrice = 0;
 
     flight_info = flight_info[0];
     console.log(flight_info);
     for (let i = 1; i <= Math.floor(flight_info.total_seats / 6); i++) {
-        console.log(i)
-        if (i <= flight_info.economy_seats) {
+        if (i <= Math.floor(flight_info.economy_seats / 6)) {
             seatArea.innerHTML += `<div class="seat_row">
-                    <img src = "images/seat.png" alt="seat id="${i}A" class="white_seat_img eco">
-                    <img src = "images/seat.png" alt="seat id="${i}B" class="white_seat_img eco">
-                    <img src = "images/seat.png" alt="seat id="${i}C" class="white_seat_img eco">
+                    <img src = "images/seat.png" alt="seat" id="${i}A" class="white_seat_img eco">
+                    <img src = "images/seat.png" alt="seat" id="${i}B" class="white_seat_img eco">
+                    <img src = "images/seat.png" alt="seat" id="${i}C" class="white_seat_img eco">
                     <div style="margin-left: -10px;"></div>
-                    <img src = "images/seat.png" alt="seat id="${i}D" class="white_seat_img eco">
-                    <img src = "images/seat.png" alt="seat id="${i}E" class="white_seat_img eco">
-                    <img src = "images/seat.png" alt="seat id="${i}F" class="white_seat_img eco">
+                    <img src = "images/seat.png" alt="seat" id="${i}D" class="white_seat_img eco">
+                    <img src = "images/seat.png" alt="seat" id="${i}E" class="white_seat_img eco">
+                    <img src = "images/seat.png" alt="seat" id="${i}F" class="white_seat_img eco">
                 </div>`
-            allSeats.push(`${i}A,eco`)
-            allSeats.push(`${i}B,eco`)
-            allSeats.push(`${i}C,eco`)
-            allSeats.push(`${i}D,eco`)
-            allSeats.push(`${i}E,eco`)
-            allSeats.push(`${i}F,eco`)
+            allSeats[`${i}A`] = 'eco'
+            allSeats[`${i}B`] = 'eco'
+            allSeats[`${i}C`] = 'eco'
+            allSeats[`${i}D`] = 'eco'
+            allSeats[`${i}E`] = 'eco'
+            allSeats[`${i}F`] = 'eco'
+
         }
-        else if (i <= flight_info.economy_seats + flight_info.business_seats) {
+        else if (i <= Math.floor((flight_info.economy_seats + flight_info.business_seats) / 6)) {
             seatArea.innerHTML += `<div class="seat_row">
-                    <img src = "images/seat.png" alt="seat id="${i}A" class="white_seat_img bus">
-                    <img src = "images/seat.png" alt="seat id="${i}B" class="white_seat_img bus">
-                    <img src = "images/seat.png" alt="seat id="${i}C" class="white_seat_img bus">
+                    <img src = "images/seat.png" alt="seat" id="${i}A" class="white_seat_img bus">
+                    <img src = "images/seat.png" alt="seat" id="${i}B" class="white_seat_img bus">
+                    <img src = "images/seat.png" alt="seat" id="${i}C" class="white_seat_img bus">
                     <div style="margin-left: -10px;"></div>
-                    <img src = "images/seat.png" alt="seat id="${i}D" class="white_seat_img bus">
-                    <img src = "images/seat.png" alt="seat id="${i}E" class="white_seat_img bus">
-                    <img src = "images/seat.png" alt="seat id="${i}F" class="white_seat_img bus">
+                    <img src = "images/seat.png" alt="seat" id="${i}D" class="white_seat_img bus">
+                    <img src = "images/seat.png" alt="seat" id="${i}E" class="white_seat_img bus">
+                    <img src = "images/seat.png" alt="seat" id="${i}F" class="white_seat_img bus">
                 </div>`
-            allSeats.push(`${i}A,bus`)
-            allSeats.push(`${i}B,bus`)
-            allSeats.push(`${i}C,bus`)
-            allSeats.push(`${i}D,bus`)
-            allSeats.push(`${i}E,bus`)
-            allSeats.push(`${i}F,bus`)
+            allSeats[`${i}A`] = 'bus'
+            allSeats[`${i}B`] = 'bus'
+            allSeats[`${i}C`] = 'bus'
+            allSeats[`${i}D`] = 'bus'
+            allSeats[`${i}E`] = 'bus'
+            allSeats[`${i}F`] = 'bus'
         }
-        else if (i <= flight_info.economy_seats + flight_info.business_seats + flight_info.first_seats) {
+        else if (i <= Math.floor((flight_info.economy_seats + flight_info.business_seats + flight_info.first_seats) / 6)) {
             seatArea.innerHTML += `<div class="seat_row">
-                    <img src = "images/seat.png" alt="seat id="${i}A" class="white_seat_img first">
-                    <img src = "images/seat.png" alt="seat id="${i}B" class="white_seat_img first">
-                    <img src = "images/seat.png" alt="seat id="${i}C" class="white_seat_img first">
+                    <img src = "images/seat.png" alt="seat" id="${i}A" class="white_seat_img first">
+                    <img src = "images/seat.png" alt="seat" id="${i}B" class="white_seat_img first">
+                    <img src = "images/seat.png" alt="seat" id="${i}C" class="white_seat_img first">
                     <div style="margin-left: -10px;"></div>
-                    <img src = "images/seat.png" alt="seat id="${i}D" class="white_seat_img first">
-                    <img src = "images/seat.png" alt="seat id="${i}E" class="white_seat_img first">
-                    <img src = "images/seat.png" alt="seat id="${i}F" class="white_seat_img first">
+                    <img src = "images/seat.png" alt="seat" id="${i}D" class="white_seat_img first">
+                    <img src = "images/seat.png" alt="seat" id="${i}E" class="white_seat_img first">
+                    <img src = "images/seat.png" alt="seat" id="${i}F" class="white_seat_img first">
                 </div>`
-            allSeats.push(`${i}A,f`)
-            allSeats.push(`${i}B,f`)
-            allSeats.push(`${i}C,f`)
-            allSeats.push(`${i}D,f`)
-            allSeats.push(`${i}E,f`)
-            allSeats.push(`${i}F,f`)
+            allSeats[`${i}A`] = 'f'
+            allSeats[`${i}B`] = 'f'
+            allSeats[`${i}C`] = 'f'
+            allSeats[`${i}D`] = 'f'
+            allSeats[`${i}E`] = 'f'
+            allSeats[`${i}F`] = 'f'
         }
     }
+
+    console.log(allSeats)
 
     whiteSeat = document.querySelectorAll(".white_seat_img")
     whiteSeat.forEach(seat => {
         seat.addEventListener("click", () => {
-            id = seat.split(",")[0]
-            pickedSeats = document.getElementById(id)
-            if (seat in pickedSeats) {
-                pickedSeats.splice(indexOf(seat), 1)
-                removePrice(seat)
+            id = seat.getAttribute("id")
+            if (pickedSeats[id] !== undefined) {
+                delete pickedSeats[id]
+                removePrice(id)
             }
             else {
-                pickedSeats.push(seat)
-                addPrice(seat)
+                pickedSeats[id] = allSeats[id]
+                addPrice(id)
             }
         })
     })
 
-    totalPrice.addEventListener("change", function () {
-        priceLabel = document.getElementById("price");
-        price.innerHTML = totalPrice;
-    })
+
 
 
     function findCookie(cookies, Cname) {
@@ -125,28 +123,33 @@ async function main() {
     }
 
     function removePrice(seat) {
-        let type = seat.split(",")[1];
+        let type = allSeats[seat]
         if (type == "eco") {
-            totalPrice -= flight_info.economy_price;
+            totalPrice -= parseInt(flight_info.economy_price);
         }
         else if (type == "bus") {
-            totalPrice -= flight_info.business_price;
+            totalPrice -= parseInt(flight_info.business_price);
         }
         else {
-            totalPrice -= flight_info.first_price;
+            totalPrice -= parseInt(flight_info.first_price);
         }
+
+        let priceLabel = document.getElementById("price");
+        priceLabel.innerHTML = totalPrice;
     }
 
     function addPrice(seat) {
-        let type = seat.split(",")[1];
+        let type = allSeats[seat]
         if (type == "eco") {
-            totalPrice += flight_info.economy_price;
+            totalPrice += parseInt(flight_info.economy_price);
         }
         else if (type == "bus") {
-            totalPrice += flight_info.business_price;
+            totalPrice += parseInt(flight_info.business_price);
         }
         else {
-            totalPrice += flight_info.first_price;
+            totalPrice += parseInt(flight_info.first_price);
         }
+        let priceLabel = document.getElementById("price");
+        priceLabel.innerHTML = totalPrice;
     }
 }

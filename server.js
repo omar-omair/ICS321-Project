@@ -197,9 +197,9 @@ app.post("/payment", async function (req, res) {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
-app.get("/addedTicket", function (req, res) {
-    res.sendFile(path.join(__dirname, 'public', 'forgetPass.html'));
-})
+
+
+
 app.post("/addedTicket", async function (req, res) {
     try {
         let tid;
@@ -210,26 +210,27 @@ app.post("/addedTicket", async function (req, res) {
                 return;
             }
             tid = result.rows[0].max_tid + 1; // Assign the incremented pid
-        const { booking_date,
-                    weight,purchase_date,
-                    pid,
-                    fid,
-                seat_number} = req.body;
-        if (booking_date && weight && pid && fid && seat_number) {
-            new Promise((resolve, reject) => {
-                db.query(`INSERT INTO ticket 
+            const { booking_date,
+                weight, purchase_date,
+                pid,
+                fid,
+                seat_number } = req.body;
+            if (booking_date && weight && pid && fid && seat_number) {
+                new Promise((resolve, reject) => {
+                    db.query(`INSERT INTO ticket 
                 VALUES(${tid}, '${booking_date}', '${weight}',30,'${purchase_date}','${pid}', '${fid}', '${seat_number}','f')`, (err, result) => {
-                    if (err) {
-                        reject(err);
-                    } else {
-                        resolve(result.rows);
-                    }
+                        if (err) {
+                            reject(err);
+                        } else {
+                            resolve(result.rows);
+                        }
+                    });
                 });
-            });
-            res.status(200).redirect('/addedTicket');
-        } else {
-            res.status(404);
-        }})
+                res.status(200).redirect('/addedTicket');
+            } else {
+                res.status(404);
+            }
+        })
     } catch (error) {
         console.error('Error executing query:', error);
         res.status(500).json({ error: 'Internal Server Error' });
