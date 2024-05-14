@@ -178,9 +178,8 @@ app.post("/payment", async function (req, res) {
         const { credit_number, holder_name, end_date, cvv } = req.body;
         let email = req.cookies.userId;
         if (credit_number && end_date && cvv) {
-            // Await the resolution of the query
             const pidResult = await db.query(`SELECT pid FROM passenger WHERE email= '${email}'`);
-            const pid_c = pidResult.rows[0].pid; // Extract the PID from the query result
+            const pid_c = pidResult.rows[0].pid; 
             await new Promise((resolve, reject) => {
                 db.query(`INSERT INTO payment_info (pid, end_date, cvv, credit_card)
                 VALUES ('${pid_c}','${end_date}', '${cvv}', '${credit_number}');
