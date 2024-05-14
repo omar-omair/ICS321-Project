@@ -235,6 +235,8 @@ async function main() {
             let pid = document.getElementById('pid')
             let fid = document.getElementById('fid')
             let seat_number = document.getElementById('seat_number')
+            let seat_type = document.getElementById('seat_type')
+            let seat_type_v = seat_type.value
             let weight_v = weight.value
             let pid_v = pid.value
             let fid_v = fid.value
@@ -250,7 +252,8 @@ async function main() {
                     purchase_date: formattedDate2,
                     pid: pid_v,
                     fid: fid_v,
-                    seat_number: seat_number_v
+                    seat_number: seat_number_v,
+                    seat_type : seat_type_v
                 })
             }).then(response => {
                 if (!response.ok) {
@@ -308,4 +311,6 @@ async function main() {
         });
 
     });
+
+
 }

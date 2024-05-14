@@ -7,6 +7,7 @@ const db = require('./db.js');
 const path = require('path');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const fetch = require('node-fetch');
 
 app.use(express.static("public"));
 
@@ -207,7 +208,8 @@ app.post("/addedTicket", async function (req, res) {
             weight, purchase_date,
             pid,
             fid,
-            seat_number } = req.body;
+            seat_number,
+            type } = req.body;
 
         if (pid == null) {
             const pidResult = await db.query(`SELECT pid FROM passenger WHERE email= '${email}'`);
@@ -224,11 +226,10 @@ app.post("/addedTicket", async function (req, res) {
 
             console.log(pid);
 
-
             if (booking_date && weight && pid && fid && seat_number) {
                 new Promise((resolve, reject) => {
                     db.query(`INSERT INTO ticket 
-                VALUES(${tid}, '${booking_date}', '${weight}',30,'${purchase_date}','${pid}', '${fid}', '${seat_number}','f')`, (err, result) => {
+                VALUES(${tid}, '${booking_date}', '${weight}',30,'${purchase_date}','${pid}', '${fid}', '${seat_number}','f', ${type})`, (err, result) => {
                         if (err) {
                             console.log('Error executing query:', err);
                             reject(err);
@@ -541,7 +542,113 @@ app.post('/cancelTicket', async (req, res) => { }) //cancels a ticket from the l
 
 app.post('/editTicket', async (req, res) => { }) // with this you can edit the seat of the ticket to any other available seat with the same seat type.
 
-app.post('/promote', async (req, res) => { }) // promote a wait lister to any available seat.
+app.post('/promote', async (req, res) => {
+    const { pid, fid, seat_number, type } = req.body
+    const reservedSeats = await new Promise((resolve, reject) => {
+        db.query(`SELECT `, (err, result) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(result.rows);
+            }
+        });
+    })
+
+    const dateTime2 = new Date();
+    const year2 = dateTime2.getFullYear();
+    const month2 = dateTime2.getMonth() + 1;
+    const day2 = dateTime2.getDate();
+
+    await fetch('http://localhost:3000/addedTicket', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            booking_date: formattedDate2,
+            weight: "50",
+            purchase_date: formattedDate2,
+            pid: pid,
+            fid: fid,
+            seat_number: seat_number,
+            type: type
+        })
+    }).then(response => {
+        if (!response.ok) {
+            console.log("Error")
+            throw new Error("")
+        }
+        return response.text();
+    }).then(data => {
+        console.log(data);
+
+    }).catch(error => {
+        alert(error.message);
+    });
+
+})
+
+// promote a wait lister to any available seat.
+
+app.post('/availableSeats', async (req, res) => {
+    const { fid } = req.body
+    const reservedSeats = await new Promise((resolve, reject) => {
+        db.query(`SELECT ti.seat_number, pl.total_seats, air.economy_seats, air.business_seats, air.first_seats
+                from ticket ti join flights fl on ti.fid = fl.fid 
+                join plane pl on fl.plane_id = pl.plane_id
+                join aircraft air on pl.aircraft_type = air.aircraft_type
+                where ti.fid='${fid}' and cancelled = 'f'`, (err, result) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(result.rows);
+            }
+        });
+    });
+
+    let totalSeats = reservedSeats[0].total_seats;
+    let eco = reservedSeats[0].economy_seats;
+    let bus = reservedSeats[0].business_seats;
+    let first = reservedSeats[0].first_seats;
+
+    allSeats = {}
+    for (let i = 1; i <= Math.floor(totalSeats / 6); i++) {
+        if (i <= Math.floor(eco / 6)) {
+            allSeats[`${i}A`] = 'eco'
+            allSeats[`${i}B`] = 'eco'
+            allSeats[`${i}C`] = 'eco'
+            allSeats[`${i}D`] = 'eco'
+            allSeats[`${i}E`] = 'eco'
+            allSeats[`${i}F`] = 'eco'
+
+        }
+        else if (i <= Math.floor((eco + bus) / 6)) {
+            allSeats[`${i}A`] = 'bus'
+            allSeats[`${i}B`] = 'bus'
+            allSeats[`${i}C`] = 'bus'
+            allSeats[`${i}D`] = 'bus'
+            allSeats[`${i}E`] = 'bus'
+            allSeats[`${i}F`] = 'bus'
+        }
+        else if (i <= Math.floor((eco + bus + first) / 6)) {
+            allSeats[`${i}A`] = 'f'
+            allSeats[`${i}B`] = 'f'
+            allSeats[`${i}C`] = 'f'
+            allSeats[`${i}D`] = 'f'
+            allSeats[`${i}E`] = 'f'
+            allSeats[`${i}F`] = 'f'
+        }
+    }
+
+    for (i = 0; i < reservedSeats.length; i++) {
+        if (allSeats[reservedSeats[i].seat_number] !== undefined) {
+            delete allSeats[reservedSeats[i].seat_number]
+        }
+    }
+
+
+    res.json(allSeats);
+})
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

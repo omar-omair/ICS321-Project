@@ -99,7 +99,7 @@ body {
 
 
 input[type="password"],
-input[type="text"] {
+input[type="text"],#seat_type {
     width: 300px;
     height: 45px;
     color: #C94C4B;
