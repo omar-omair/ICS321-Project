@@ -253,7 +253,7 @@ async function main() {
                     pid: pid_v,
                     fid: fid_v,
                     seat_number: seat_number_v,
-                    seat_type : seat_type_v
+                    type : seat_type_v
                 })
             }).then(response => {
                 if (!response.ok) {
