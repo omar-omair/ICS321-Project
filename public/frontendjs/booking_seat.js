@@ -38,10 +38,11 @@ async function main() {
                     <img src = "images/seat.png" alt="seat" id="${i}A" class="white_seat_img eco">
                     <img src = "images/seat.png" alt="seat" id="${i}B" class="white_seat_img eco">
                     <img src = "images/seat.png" alt="seat" id="${i}C" class="white_seat_img eco">
-                    <div style="margin-left: -10px;"></div>
+                    <div style="margin-left: -10px; font-size:18px; color:#C94C4B;"></div>
                     <img src = "images/seat.png" alt="seat" id="${i}D" class="white_seat_img eco">
                     <img src = "images/seat.png" alt="seat" id="${i}E" class="white_seat_img eco">
                     <img src = "images/seat.png" alt="seat" id="${i}F" class="white_seat_img eco">
+                    <div style="margin-left: 25px; font-size:25px; color:#C94C4B; font-weight:bold;">${i}</div>
                 </div>`
             allSeats[`${i}A`] = 'eco'
             allSeats[`${i}B`] = 'eco'
@@ -60,6 +61,7 @@ async function main() {
                     <img src = "images/seat.png" alt="seat" id="${i}D" class="white_seat_img bus">
                     <img src = "images/seat.png" alt="seat" id="${i}E" class="white_seat_img bus">
                     <img src = "images/seat.png" alt="seat" id="${i}F" class="white_seat_img bus">
+                    <div style="margin-left: 25px; font-size:25px; color:#353ff2; font-weight:bold;">${i}</div>
                 </div>`
             allSeats[`${i}A`] = 'bus'
             allSeats[`${i}B`] = 'bus'
@@ -77,6 +79,7 @@ async function main() {
                     <img src = "images/seat.png" alt="seat" id="${i}D" class="white_seat_img first">
                     <img src = "images/seat.png" alt="seat" id="${i}E" class="white_seat_img first">
                     <img src = "images/seat.png" alt="seat" id="${i}F" class="white_seat_img first">
+                    <div style="margin-left: 25px; font-size:25px; color:#FDD017; font-weight:bold;">${i}</div>
                 </div>`
             allSeats[`${i}A`] = 'f'
             allSeats[`${i}B`] = 'f'
@@ -95,11 +98,26 @@ async function main() {
             id = seat.getAttribute("id")
             if (pickedSeats[id] !== undefined) {
                 delete pickedSeats[id]
+                seat.src = "../images/seat.png"
                 removePrice(id)
             }
             else {
                 pickedSeats[id] = allSeats[id]
+                seat.src = "../images/red seat.png"
                 addPrice(id)
+            }
+
+            let counter = 0
+            let selected_seatsP = document.getElementById("selected_seats")
+            selected_seatsP.innerHTML = ""
+            for (i in pickedSeats) {
+                if (counter < Object.keys(pickedSeats).length - 1) {
+                    selected_seatsP.innerHTML += i + ", ";
+                }
+                else {
+                    selected_seatsP.innerHTML += i + ".";
+                }
+                counter++;
             }
         })
     })

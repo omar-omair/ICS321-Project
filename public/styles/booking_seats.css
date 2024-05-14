@@ -26,24 +26,27 @@
     border-right-color: #C94C4B;
     border-top-style: hidden;
     border-bottom-style: hidden;
-    /* Adjust these values as needed */
-    flex-grow: 0;
-    /* Prevents the item from growing */
-    flex-shrink: 0;
-    /* Prevents the item from shrinking */
-    flex-basis: 500px;
-    /* Allows the item to determine its own size */
     height: 1000px;
     margin-right: 20px;
     margin-top: 10px;
-    width: 1200px;
+    width: 560px;
     max-height: 800px;
     overflow-y: auto;
     padding-bottom: 10px;
 
 }
 
-#letters {
+#selected_seats {
+    background-color: #121212;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 25px;
+    color: #C94C4B;
+    font-weight: bold;
+    height: 100px;
+}
+
+#seats #letters {
     display: flex;
     color: white;
 }
