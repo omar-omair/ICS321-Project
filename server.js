@@ -203,6 +203,18 @@ app.post("/payment", async function (req, res) {
 app.post("/addedTicket", async function (req, res) {
     try {
         let tid;
+        let email = req.cookies.userId;
+        let { booking_date,
+            weight, purchase_date,
+            pid,
+            fid,
+            seat_number } = req.body;
+
+        if (pid == null) {
+            const pidResult = await db.query(`SELECT pid FROM passenger WHERE email= '${email}'`);
+            pid = pidResult.rows[0].pid;
+        }
+
         db.query(`SELECT MAX(tid) AS max_tid FROM ticket`, (err, result) => {
             if (err) {
                 console.error('Error executing query:', err);
@@ -210,25 +222,27 @@ app.post("/addedTicket", async function (req, res) {
                 return;
             }
             tid = result.rows[0].max_tid + 1; // Assign the incremented pid
-            const { booking_date,
-                weight, purchase_date,
-                pid,
-                fid,
-                seat_number } = req.body;
+
+            console.log(pid);
+
+
             if (booking_date && weight && pid && fid && seat_number) {
                 new Promise((resolve, reject) => {
                     db.query(`INSERT INTO ticket 
                 VALUES(${tid}, '${booking_date}', '${weight}',30,'${purchase_date}','${pid}', '${fid}', '${seat_number}','f')`, (err, result) => {
                         if (err) {
+                            console.log('Error executing query:', err);
                             reject(err);
                         } else {
                             resolve(result.rows);
                         }
                     });
                 });
-                res.status(200).redirect('/addedTicket');
+                console.log('ok');
+                res.status(200).send("ok")
             } else {
-                res.status(404);
+                console.log('not ok');
+                res.status(404).send("not ok");
             }
         })
     } catch (error) {
@@ -436,6 +450,7 @@ app.get("/payments", async function (req, res) {
     });
     res.json(response);
 })
+
 app.post("/allTicketsID", async function (req, res) {
     const { tid } = req.body;
     if (tid) {
@@ -486,6 +501,38 @@ app.post("/allTicketsID", async function (req, res) {
         res.status(400).send("Ticket ID (tid) is required");
     }
 
+})
+
+app.post('/tickets', async (req, res) => {
+    const { fid } = req.body
+    const response2 = await new Promise((resolve, reject) => {
+        db.query(`SELECT seat_number from ticket where fid='${fid}'`, (err, result) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(result.rows);
+            }
+        });
+    });
+    res.json(response2);
+})
+
+app.get('/user', async (req, res) => {
+    let email = req.cookies.userId;
+
+    response = await await new Promise((resolve, reject) => {
+        db.query(`SELECT name from passenger where email='${email}'`, (err, result) => {
+            if (err) {
+                reject(err);
+            }
+            else {
+                resolve(result.rows);
+            }
+
+        });
+
+    });
+    res.json(response);
 })
 
 app.listen(PORT, () => {

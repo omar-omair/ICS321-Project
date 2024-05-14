@@ -210,13 +210,13 @@ async function main() {
     let adding_button = document.getElementById('adding_button');
     adding_button.addEventListener('click', async function (e) {
         e.preventDefault();
-        admin_page.style.display='none';
-        logout.style.display='none';
-        report.style.display='block';
-        back.style.display='block';
-        addPage.style.display='block';
+        admin_page.style.display = 'none';
+        logout.style.display = 'none';
+        report.style.display = 'block';
+        back.style.display = 'block';
+        addPage.style.display = 'block';
         let add_button = document.getElementById("add_ticket_button")
-        add_button.addEventListener('click',async function(e){
+        add_button.addEventListener('click', async function (e) {
             e.preventDefault()
             let booking_date = document.getElementById('bookDate')
             let booking_date_v = booking_date.value
@@ -247,7 +247,7 @@ async function main() {
                 body: JSON.stringify({
                     booking_date: formattedDate,
                     weight: weight_v,
-                    purchase_date:formattedDate2,
+                    purchase_date: formattedDate2,
                     pid: pid_v,
                     fid: fid_v,
                     seat_number: seat_number_v
@@ -257,14 +257,15 @@ async function main() {
                     console.log("Error")
                     throw new Error("")
                 }
-                return response.text();
+                return response.text()
             }).then(data => {
-                console.log(data);
-                window.location.href = "/admin"
-    
+                alert("Ticket added successfully")
+
             }).catch(error => {
                 alert(error.message);
             });
+
+            window.location.href = "/admin"
         })
     });
     let removing_button = document.getElementById('removing_button');

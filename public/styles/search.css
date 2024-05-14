@@ -83,6 +83,16 @@ body {
     border-radius: 2px;
 }
 
+#hello {
+    position: absolute;
+    z-index: 9;
+    display: inline;
+    left: 100px;
+    top: -20px;
+    font-size: 48px;
+    color: white;
+}
+
 #blackdiv * {
     margin-left: 30px;
 }
