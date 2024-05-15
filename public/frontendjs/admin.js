@@ -277,6 +277,8 @@ async function main() {
         let booking_list = [];
         para.innerHTML = '';
         let averageNum = 0;
+        let count = 0;
+
         await fetch("http://localhost:3000/bookingPercentage").then(response => response.json()).then(data => { booking_list = data; });
         const table = document.createElement('table');
         table.classList.add('activeFlights-table');
@@ -303,6 +305,7 @@ async function main() {
             if (formattedDate === formattedDate2) {
                 const bookingPercentage = parseFloat(item.booking_percentage);
                 averageNum += bookingPercentage;
+                count+=1;
             }
         });
         if (averageNum >= 0) {
@@ -310,7 +313,7 @@ async function main() {
             const idCell = row.insertCell();
             const percentageCell = row.insertCell();
             idCell.textContent = formattedDate2;
-            percentageCell.textContent = averageNum / 2 + "%";
+            percentageCell.textContent = averageNum / count + "%";
         }
         para.appendChild(table);
     });
