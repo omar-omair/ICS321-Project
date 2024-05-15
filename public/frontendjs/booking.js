@@ -27,16 +27,23 @@ async function main() {
     hello.innerHTML += "Hello,&nbsp" + user + "!"
 
     let originCities = [];
+    let originArray = [];
 
     await fetch("http://localhost:3000/origin").then(response => response.json()).then(data => { originCities = data; });
 
     originCities.forEach(origin => {
+        originArray.push(origin.src_city);
+    })
 
-        originSelect.innerHTML += `<option value="${origin.src_city}">${origin.src_city}</option>`
+    originArray = Array.from(new Set(originArray));
+
+    console.log(originArray);
+
+    originArray.forEach(origin => {
+        console.log(origin)
+        originSelect.innerHTML += `<option value="${origin}">${origin}</option>`
 
     });
-
-    removeDuplicateOptions(originSelect);
 
     changeEverything()
 
@@ -63,11 +70,19 @@ async function main() {
 
         destSelect.innerHTML = null
 
-        destCities.forEach(dest => {
-            destSelect.innerHTML += `<option value="${dest.dest_city}">${dest.dest_city}</option>`
-        });
+        destArray = []
 
-        removeDuplicateOptions(destSelect);
+        destCities.forEach(dest => {
+            destArray.push(dest.dest_city);
+        })
+
+        destArray = Array.from(new Set(destArray));
+
+        console.log(destArray);
+
+        destArray.forEach(dest => {
+            destSelect.innerHTML += `<option value="${dest}">${dest}</option>`
+        });
 
     }
 
@@ -157,28 +172,12 @@ logout_button.addEventListener('click', async function (e) {
     e.preventDefault();
     window.location.href = '/logout'; // Redirect to login page
 });
+
 let myTicket = document.getElementById('myTicket');
 myTicket.addEventListener('click', async function (e) {
     e.preventDefault();
     window.location.href = '/UI'; // Redirect to login page
 });
-function removeDuplicateOptions(selectElement) {
-    // Create an array to store unique option values 
-    let uniqueOptions = [];
-
-    // Iterate through existing options 
-    for (let option of selectElement.options) {
-        // Check if the option value is not already in the uniqueOptions array 
-        if (!uniqueOptions.includes(option.value)) {
-            // Add the option value to the uniqueOptions array 
-            uniqueOptions.push(option.value);
-        } else {
-            // If the option value is a duplicate, remove the option 
-            selectElement.removeChild(option);
-        }
-    }
-}
-
 
 
 

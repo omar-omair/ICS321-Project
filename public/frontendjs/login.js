@@ -21,7 +21,7 @@ function main() {
             })
         }).then(response => {
             if (!response.ok) {
-
+                alert("Email and/or Password are not valid");
             }
             return response.text();
         }).then(data => {
